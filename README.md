@@ -25,6 +25,14 @@ https://samuel04-png.github.io/Chipos_Lux_Apartments/
 
 The deployment workflow lives in `.github/workflows/deploy.yml` and builds the Vite app with the correct project base path.
 
+In GitHub, set **Settings > Pages > Build and deployment** to:
+
+- Source: **Deploy from a branch**
+- Branch: **gh-pages**
+- Folder: **/root**
+
+Do not point GitHub Pages at `main` / `/root`, because that serves the unbuilt Vite source files and causes missing JavaScript or image 404 errors.
+
 ## Where to update content
 
 - Website images: curated, optimized copies live in `public/images/site`.
