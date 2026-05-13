@@ -1,0 +1,287 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-family: "Manrope", system-ui, sans-serif;
+    background: #fbf6ea;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #fbf6ea 0%, #f7ecd8 48%, #fbf6ea 100%);
+    color: #082b49;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  img {
+    display: block;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply text-[0.72rem] font-extrabold uppercase tracking-[0.26em] text-wine;
+  }
+
+  .section-title {
+    @apply max-w-3xl font-display text-4xl font-bold leading-[1.02] text-ink sm:text-5xl;
+  }
+
+  .copy {
+    @apply text-base leading-8 text-ink/70;
+  }
+
+  .copy-large {
+    @apply text-lg leading-9 text-ink/75;
+  }
+
+  .nav-link {
+    @apply text-[0.78rem] font-extrabold uppercase tracking-[0.18em] text-ink/70 transition hover:text-wine focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-light,
+  .btn-gold {
+    @apply inline-flex min-h-12 max-w-full items-center gap-2 rounded px-5 py-3 text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4;
+  }
+
+  .btn-primary {
+    @apply bg-wine text-white shadow-[0_14px_30px_rgba(143,24,49,0.25)] hover:-translate-y-0.5 hover:bg-[#781329] focus-visible:outline-wine;
+  }
+
+  .btn-secondary {
+    @apply border border-ink/20 bg-white text-ink shadow-sm hover:-translate-y-0.5 hover:border-champagne hover:text-wine focus-visible:outline-champagne;
+  }
+
+  .btn-light {
+    @apply border border-white/40 bg-white/90 text-ink shadow-sm backdrop-blur hover:-translate-y-0.5 hover:bg-white focus-visible:outline-white;
+  }
+
+  .btn-gold {
+    @apply bg-champagne text-ink hover:-translate-y-0.5 hover:bg-[#d8b86f] focus-visible:outline-champagne;
+  }
+
+  .icon-link {
+    @apply inline-flex items-center gap-2 text-sm font-bold text-ink/75 transition hover:text-wine;
+  }
+
+  .hero-section {
+    @apply relative isolate overflow-hidden bg-ink;
+  }
+
+  .hero-bg {
+    @apply absolute inset-0 h-full w-full object-cover object-center;
+  }
+
+  .hero-shade {
+    @apply absolute inset-0;
+    background:
+      linear-gradient(90deg, rgba(4, 18, 31, 0.9) 0%, rgba(7, 31, 49, 0.68) 42%, rgba(7, 31, 49, 0.18) 76%, rgba(7, 31, 49, 0.08) 100%),
+      linear-gradient(180deg, rgba(4, 18, 31, 0.18) 0%, rgba(4, 18, 31, 0.58) 100%);
+  }
+
+  .hero-stat {
+    @apply flex min-h-14 items-center gap-2 rounded border border-white/20 bg-white/10 px-4 py-3 text-sm font-bold text-white shadow-[0_14px_35px_rgba(0,0,0,0.18)] backdrop-blur;
+  }
+
+  .hero-stat svg {
+    @apply shrink-0 text-champagne;
+  }
+
+  .arrival-strip {
+    @apply grid gap-6 rounded bg-ivory p-5 shadow-soft ring-1 ring-white/70 lg:grid-cols-[0.92fr_1fr] lg:items-center lg:p-7;
+  }
+
+  .arrival-fact {
+    @apply rounded border border-sand/80 bg-white p-4 shadow-sm;
+  }
+
+  .arrival-fact span {
+    @apply block text-[0.65rem] font-extrabold uppercase tracking-[0.2em] text-wine;
+  }
+
+  .arrival-fact strong {
+    @apply mt-2 block text-sm leading-6 text-ink;
+  }
+
+  .about-collage {
+    @apply relative min-h-[24rem] sm:min-h-[30rem];
+  }
+
+  .about-main {
+    @apply h-[22rem] w-full rounded object-cover shadow-soft sm:h-[28rem];
+  }
+
+  .about-inset {
+    @apply absolute -bottom-8 right-4 h-40 w-32 rounded object-cover shadow-card ring-4 ring-ivory sm:h-52 sm:w-44 lg:-right-2;
+  }
+
+  .gallery-grid {
+    @apply grid auto-rows-[19rem] gap-4 md:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .gallery-card {
+    @apply relative min-h-[19rem] overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/5;
+  }
+
+  .gallery-card img {
+    @apply h-full w-full scale-[1.01] object-cover transition duration-500;
+  }
+
+  .gallery-card:hover img {
+    @apply scale-[1.045];
+  }
+
+  .gallery-overlay {
+    @apply absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,rgba(8,43,73,0),rgba(8,43,73,0.9))] px-5 pb-5 pt-24 text-white;
+  }
+
+  .gallery-overlay span {
+    @apply font-display text-3xl font-bold;
+  }
+
+  .gallery-overlay p {
+    @apply mt-2 max-w-md text-sm leading-6 text-white/80;
+  }
+
+  .sticky-copy {
+    @apply lg:sticky lg:top-28;
+  }
+
+  .amenity-list {
+    @apply grid gap-3;
+  }
+
+  .amenity-row {
+    @apply grid grid-cols-[auto_1fr] gap-4 rounded border border-sand/80 bg-white/80 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card;
+  }
+
+  .amenity-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded bg-mist text-leaf ring-1 ring-leaf/10;
+  }
+
+  .amenity-row h3 {
+    @apply text-base font-extrabold text-ink;
+  }
+
+  .amenity-row p {
+    @apply mt-2 text-sm leading-6 text-ink/70;
+  }
+
+  .rates-panel {
+    @apply relative isolate overflow-hidden bg-ink;
+  }
+
+  .rates-bg {
+    @apply absolute inset-0 h-full w-full object-cover;
+  }
+
+  .rates-shade {
+    @apply absolute inset-0 bg-ink/80;
+  }
+
+  .rate-card {
+    @apply rounded border border-white/10 bg-white/[0.08] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.16)] backdrop-blur;
+  }
+
+  .map-wrap {
+    @apply relative overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/10;
+  }
+
+  .map-wrap iframe {
+    @apply block min-h-[26rem] w-full bg-cream;
+  }
+
+  .map-placeholder {
+    @apply absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[linear-gradient(135deg,#f4ead8,#edf0e7)] text-center font-bold text-ink;
+  }
+
+  .map-placeholder svg {
+    @apply text-wine;
+  }
+
+  .contact-line {
+    @apply flex items-center gap-3 rounded border border-sand bg-white px-4 py-3 text-sm font-bold text-ink shadow-sm transition hover:-translate-y-0.5 hover:text-wine;
+  }
+
+  .contact-line svg {
+    @apply text-wine;
+  }
+
+  .booking-form {
+    @apply rounded bg-white p-5 shadow-soft ring-1 ring-sand/80 sm:p-7;
+  }
+
+  .field span {
+    @apply mb-2 block text-xs font-extrabold uppercase tracking-[0.16em] text-ink/70;
+  }
+
+  .field input,
+  .field textarea {
+    @apply w-full rounded border border-sand bg-ivory px-4 py-3 text-sm font-semibold text-ink outline-none transition placeholder:text-ink/40 focus:border-champagne focus:bg-white focus:ring-4 focus:ring-champagne/20;
+  }
+
+  .field textarea {
+    @apply resize-y;
+  }
+
+  .footer-title {
+    @apply text-sm font-extrabold uppercase tracking-[0.18em] text-champagne;
+  }
+
+  .footer-text {
+    @apply mt-3 text-sm leading-6 text-white/70;
+  }
+
+  .footer-link {
+    @apply text-sm font-semibold text-white/70 transition hover:text-champagne;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-bg {
+    object-position: 74% center;
+  }
+
+  .hero-shade {
+    background:
+      linear-gradient(90deg, rgba(4, 18, 31, 0.72) 0%, rgba(7, 31, 49, 0.34) 70%, rgba(7, 31, 49, 0.18) 100%),
+      linear-gradient(180deg, rgba(4, 18, 31, 0.12) 0%, rgba(4, 18, 31, 0.6) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

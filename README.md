@@ -1,0 +1,37 @@
+# Chipo's Lux Apartments Website
+
+One-page React, Vite, TypeScript, and Tailwind CSS starter website for Chipo's Lux Apartments in Choma, Southern Province, Zambia.
+
+## Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Production build:
+
+```bash
+npm run build
+```
+
+## GitHub Pages
+
+This project is configured for GitHub Pages at:
+
+```text
+https://samuel04-png.github.io/Chipos_Lux_Apartments/
+```
+
+The deployment workflow lives in `.github/workflows/deploy.yml` and builds the Vite app with the correct project base path.
+
+## Where to update content
+
+- Website images: curated, optimized copies live in `public/images/site`.
+- Original apartment photos: keep them in `public/images`; the current site selection is mapped in `src/content.ts`.
+- Rates: update the `pricing` array in `src/content.ts`.
+- Google Maps: replace `mapEmbedUrl` in `src/content.ts` with the `src` value from a normal Google Maps iframe embed.
+- WhatsApp number: update `business.whatsappNumber` and `business.phoneDisplay` in `src/content.ts`.
+- Email and location: update the `business` object in `src/content.ts`.
+
+No environment variables are required. The booking form opens WhatsApp with the entered details and does not require a backend.
