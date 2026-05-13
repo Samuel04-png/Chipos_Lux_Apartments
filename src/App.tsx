@@ -224,7 +224,7 @@ function App() {
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["Location", "Choma, Southern Province"],
+                  ["Location", business.locationNote],
                   ["Stay type", "Short and long stays"],
                   ["Contact", business.phoneDisplay],
                 ].map(([label, value]) => (
@@ -403,7 +403,9 @@ function App() {
             <div>
               <p className="eyebrow">Location</p>
               <h2 className="section-title mt-4">Find us in Choma</h2>
-              <p className="copy mt-5">Located in Choma, Southern Province, Zambia.</p>
+              <p className="copy mt-5">
+                Located in Choma, Southern Province, Zambia. {business.locationNote}
+              </p>
               <img
                 src={images.exteriorGarden}
                 alt="Garden exterior at Chipo's Lux Apartments"
@@ -417,6 +419,7 @@ function App() {
                   <div>
                     <p className="font-bold text-ink">{business.name}</p>
                     <p className="mt-1 text-sm leading-6 text-ink/70">{business.location}</p>
+                    <p className="mt-1 text-sm leading-6 text-ink/70">{business.locationNote}</p>
                   </div>
                 </div>
                 <a className="btn-secondary mt-5 w-full justify-center" href={directionsLink} target="_blank" rel="noreferrer">
@@ -536,6 +539,7 @@ function App() {
           <div>
             <p className="footer-title">Contact</p>
             <p className="footer-text">{business.location}</p>
+            <p className="footer-text">{business.locationNote}</p>
             <p className="footer-text">Phone / WhatsApp: {business.phoneDisplay}</p>
             <p className="footer-text">Email: {business.email}</p>
           </div>

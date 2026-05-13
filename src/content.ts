@@ -13,8 +13,9 @@ import {
 export const business = {
   name: "Chipo's Lux Apartments",
   location: "Choma, Southern Province, Zambia",
-  phoneDisplay: "+260 764 937 377",
-  whatsappNumber: "260764937377",
+  locationNote: "150 metres from the New Apostolic Church.",
+  phoneDisplay: "0764937372",
+  whatsappNumber: "260764937372",
   email: "Chipolux1@gmail.com",
   tagline: "Home Away From Home",
 };
@@ -47,11 +48,12 @@ export const whatsappLink = `https://wa.me/${business.whatsappNumber}?text=${enc
 )}`;
 
 export const directionsLink =
-  "https://www.google.com/maps/search/?api=1&query=Choma%2C%20Southern%20Province%2C%20Zambia";
+  "https://maps.google.com/?q=-16.809271,27.001781";
 
-// Replace this string with the src value from a normal Google Maps iframe embed.
+// Uses the provided coordinates in a normal Google Maps iframe embed.
 // Do not add a Google Maps API key to this frontend project.
-export const mapEmbedUrl = "PASTE_GOOGLE_MAPS_EMBED_URL_HERE";
+export const mapEmbedUrl =
+  "https://maps.google.com/maps?q=-16.809271,27.001781&z=16&output=embed";
 
 export const heroStats = [
   "Short & long stays",
