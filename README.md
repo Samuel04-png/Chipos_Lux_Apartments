@@ -37,7 +37,7 @@ Do not point GitHub Pages at `main` / `/root`, because that serves the unbuilt V
 
 - Website images: curated, optimized copies live in `public/images/site`.
 - Latest Chipolux photos use semantic filenames such as `chipolux-front-exterior.jpg`, `chipolux-living-room.jpg`, `chipolux-bedroom-wide.jpg`, and `chipolux-bathroom-shower.jpg`.
-- Website video: the compressed web version lives in `public/videos/chipolux-video-tour.mp4`. Keep the original 4K video outside the repo.
+- Website video: the compressed web version lives in `public/videos/chipolux-video-tour.mp4`. The hero uses this video on good connections and falls back to `chipolux-front-exterior.jpg` for slower/data-saver connections. Keep the original 4K video outside the repo.
 - Original apartment photos: keep them in `public/images`; the current site selection is mapped in `src/content.ts`.
 - Rates: update the `pricing` array in `src/content.ts`.
 - Google Maps: update `directionsLink` and `mapEmbedUrl` in `src/content.ts`.

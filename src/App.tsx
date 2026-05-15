@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -62,14 +62,51 @@ const initialForm: BookingForm = {
   message: "",
 };
 
+type NetworkInformationLike = {
+  downlink?: number;
+  effectiveType?: string;
+  saveData?: boolean;
+  addEventListener?: (type: "change", listener: () => void) => void;
+  removeEventListener?: (type: "change", listener: () => void) => void;
+};
+
+const getConnection = () =>
+  (navigator as Navigator & { connection?: NetworkInformationLike }).connection;
+
+const shouldUseHeroVideo = () => {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return false;
+
+  const connection = getConnection();
+  if (!connection) return true;
+  if (connection.saveData) return false;
+  if (connection.effectiveType === "slow-2g" || connection.effectiveType === "2g") return false;
+  if (typeof connection.downlink === "number" && connection.downlink > 0 && connection.downlink < 1.5) {
+    return false;
+  }
+
+  return true;
+};
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState<BookingForm>(initialForm);
   const [formError, setFormError] = useState("");
+  const [useHeroVideo, setUseHeroVideo] = useState(false);
 
   const mapReady = mapEmbedUrl.startsWith("https://");
   const mapSrc = mapReady ? mapEmbedUrl : "about:blank";
   const phoneHref = `tel:${business.phoneDisplay.replace(/\s/g, "")}`;
+
+  useEffect(() => {
+    const updateHeroMedia = () => setUseHeroVideo(shouldUseHeroVideo());
+    updateHeroMedia();
+
+    const connection = getConnection();
+    connection?.addEventListener?.("change", updateHeroMedia);
+
+    return () => connection?.removeEventListener?.("change", updateHeroMedia);
+  }, []);
 
   const handleFieldChange = (field: keyof BookingForm, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -186,6 +223,21 @@ function App() {
             alt="Front exterior of Chipolux Apartment in Choma"
             className="hero-bg"
           />
+          {useHeroVideo ? (
+            <video
+              className="hero-bg hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={images.heroFront}
+              aria-hidden="true"
+              onError={() => setUseHeroVideo(false)}
+            >
+              <source src={images.videoTour} type="video/mp4" />
+            </video>
+          ) : null}
           <div className="hero-shade" />
 
           <div className="section-shell relative z-10 flex min-h-[calc(100svh-3rem)] flex-col justify-end pb-10 pt-32 lg:pb-14">

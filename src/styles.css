@@ -103,6 +103,10 @@
     @apply absolute inset-0 h-full w-full object-cover object-center;
   }
 
+  .hero-video {
+    @apply block;
+  }
+
   .hero-shade {
     @apply absolute inset-0;
     background:
