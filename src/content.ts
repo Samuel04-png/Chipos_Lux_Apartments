@@ -19,7 +19,7 @@ export const business = {
   shortName: "Chipolux Apartment",
   location: "Choma, Southern Province, Zambia",
   locationNote: "150 metres from the New Apostolic Church.",
-  distanceFromTown: "Approximately [ADD DISTANCE] from Choma Town",
+  distanceFromTown: "Approximately 5 minutes from Choma Town.",
   phoneDisplay: "0764937372",
   whatsappNumber: "260764937372",
   email: "Chipolux1@gmail.com",
