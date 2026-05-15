@@ -17,13 +17,13 @@ npm run build
 
 ## GitHub Pages
 
-This project is configured for GitHub Pages at:
+This project is configured for GitHub Pages at the custom domain:
 
 ```text
-https://samuel04-png.github.io/Chipos_Lux_Apartments/
+https://chiposluxapartments.com/
 ```
 
-The deployment workflow lives in `.github/workflows/deploy.yml` and builds the Vite app with the correct project base path.
+The deployment workflow lives in `.github/workflows/deploy.yml` and builds the Vite app with the custom-domain root base path.
 
 In GitHub, set **Settings > Pages > Build and deployment** to:
 
