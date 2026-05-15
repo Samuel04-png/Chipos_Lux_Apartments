@@ -204,8 +204,6 @@ export const pricing = [
 
 export const landmarks = [
   "150 metres from the New Apostolic Church",
-  "[ADD NEARBY LANDMARK 2]",
-  "[ADD NEARBY LANDMARK 3]",
 ];
 
 export const testimonials = [
