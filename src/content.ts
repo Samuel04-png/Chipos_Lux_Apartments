@@ -1,19 +1,25 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  AirVent,
   BedDouble,
   CalendarDays,
   Car,
-  KeyRound,
-  Leaf,
+  CookingPot,
+  MapPin,
+  MonitorPlay,
   ShieldCheck,
   Sparkles,
+  Star,
+  Waves,
   Wifi,
 } from "lucide-react";
 
 export const business = {
   name: "Chipo's Lux Apartments",
+  shortName: "Chipolux Apartment",
   location: "Choma, Southern Province, Zambia",
   locationNote: "150 metres from the New Apostolic Church.",
+  distanceFromTown: "Approximately [ADD DISTANCE] from Choma Town",
   phoneDisplay: "0764937372",
   whatsappNumber: "260764937372",
   email: "Chipolux1@gmail.com",
@@ -24,31 +30,27 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+
 
 export const images = {
   logo: asset("images/chipos-logo.png"),
-  heroExterior: asset("images/site/hero-exterior-pool.jpg"),
-  heroLiving: asset("images/site/hero-living-panorama.jpg"),
-  heroBedroom: asset("images/site/hero-bedroom.jpg"),
-  living: asset("images/site/living-room-wide.jpg"),
-  bedroomGarden: asset("images/site/bedroom-garden.jpg"),
-  bedroomSuite: asset("images/site/bedroom-suite.jpg"),
+  heroFront: asset("images/site/chipolux-front-exterior.jpg"),
+  exteriorGarden: asset("images/site/chipolux-garden-exterior.jpg"),
+  livingRoom: asset("images/site/chipolux-living-room.jpg"),
+  bedroomWide: asset("images/site/chipolux-bedroom-wide.jpg"),
+  bedroomWarm: asset("images/site/chipolux-bedroom-warm.jpg"),
+  bedroomAc: asset("images/site/chipolux-bedroom-ac.jpg"),
+  bathroomShower: asset("images/site/chipolux-bathroom-shower.jpg"),
+  bathroomVanity: asset("images/site/chipolux-bathroom-vanity.jpg"),
   kitchen: asset("images/site/kitchen-main.jpg"),
-  bathroom: asset("images/site/bathroom-main.jpg"),
-  bathroomDetail: asset("images/site/bathroom-detail.jpg"),
-  exteriorGarden: asset("images/site/exterior-garden.jpg"),
-  parking: asset("images/site/parking-driveway.jpg"),
   pool: asset("images/site/pool-courtyard.jpg"),
-  detailLamp: asset("images/site/room-detail-lamp.jpg"),
-  wardrobe: asset("images/site/wardrobe.jpg"),
+  videoTour: asset("videos/chipolux-video-tour.mp4"),
 };
 
 export const whatsappMessage =
-  "Hello Chipo's Lux Apartments, I would like to inquire about booking an apartment in Choma.";
+  "Hello, I would like to book an apartment at Chipolux Apartment.";
 
 export const whatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
   whatsappMessage,
 )}`;
 
-export const directionsLink =
-  "https://maps.google.com/?q=-16.809271,27.001781";
+export const directionsLink = "https://maps.google.com/?q=-16.809271,27.001781";
 
 // Uses the provided coordinates in a normal Google Maps iframe embed.
 // Do not add a Google Maps API key to this frontend project.
@@ -59,51 +61,79 @@ export const heroStats = [
   "Short & long stays",
   "Secure parking",
   "Wi-Fi available",
-  "Housekeeping",
+  "Customer service",
+];
+
+export const apartmentHighlights = [
+  {
+    title: "Modern bedrooms",
+    text: "Comfortable furnished bedrooms with air conditioning, soft bedding, and a calm private feel.",
+    image: images.bedroomWide,
+  },
+  {
+    title: "Relaxed living spaces",
+    text: "A polished lounge area with smart TV, seating, and room to settle in after a day in Choma.",
+    image: images.livingRoom,
+  },
+  {
+    title: "Secure property setting",
+    text: "A private exterior with greenery, secure parking, and convenient access around the apartments.",
+    image: images.exteriorGarden,
+  },
 ];
 
 export const galleryItems = [
   {
-    title: "Arrival courtyard",
-    detail: "Modern apartment frontage with a landscaped outdoor pool area.",
-    image: images.heroExterior,
+    title: "Front exterior",
+    category: "Exterior",
+    detail: "The selected front view of Chipolux Apartment.",
+    image: images.heroFront,
     layout: "wide",
   },
   {
     title: "Living room",
-    detail: "A furnished lounge with TV, seating, and space to unwind.",
-    image: images.heroLiving,
+    category: "Apartment",
+    detail: "A furnished lounge with smart TV and comfortable seating.",
+    image: images.livingRoom,
     layout: "wide",
   },
   {
-    title: "Bedroom with garden light",
-    detail: "Calm bedding, bedside lighting, and natural light from the garden side.",
-    image: images.bedroomGarden,
+    title: "Garden bedroom",
+    category: "Bedroom",
+    detail: "Warm bedding, natural light, and a calm garden-side view.",
+    image: images.bedroomWarm,
   },
   {
-    title: "Suite bedroom",
-    detail: "Soft neutral finishes, layered bedding, and a private room layout.",
-    image: images.bedroomSuite,
+    title: "Air-conditioned bedroom",
+    category: "Bedroom",
+    detail: "A modern room with air conditioning and a private feel.",
+    image: images.bedroomAc,
   },
   {
-    title: "Kitchenette",
-    detail: "A practical self-catering kitchen with essential appliances.",
-    image: images.kitchen,
+    title: "Wide bedroom view",
+    category: "Bedroom",
+    detail: "A neatly furnished bedroom with consistent finishes.",
+    image: images.bedroomWide,
+    layout: "wide",
   },
   {
-    title: "Bathroom",
-    detail: "Bright marble finishes with a clean shower and wash area.",
-    image: images.bathroom,
+    title: "Bathroom shower",
+    category: "Bathroom",
+    detail: "Marble-style finishes with a clean shower area.",
+    image: images.bathroomShower,
   },
   {
-    title: "Outdoor access",
-    detail: "Walkways, greenery, and secure parking around the apartments.",
-    image: images.parking,
+    title: "Bathroom vanity",
+    category: "Bathroom",
+    detail: "Bright bathroom layout with towel rail and mirror.",
+    image: images.bathroomVanity,
   },
   {
-    title: "Finishing details",
-    detail: "Small touches that make each apartment feel prepared for guests.",
-    image: images.detailLamp,
+    title: "Garden exterior",
+    category: "Exterior",
+    detail: "Landscaped walkways and a quiet property setting.",
+    image: images.exteriorGarden,
+    layout: "wide",
   },
 ];
 
@@ -113,44 +143,44 @@ export const amenities: Array<{
   icon: LucideIcon;
 }> = [
   {
-    title: "Fully furnished apartments",
-    text: "Bedrooms, lounge spaces, storage, and kitchen essentials are ready on arrival.",
-    icon: BedDouble,
-  },
-  {
-    title: "Wi-Fi and modern amenities",
-    text: "Useful everyday comforts for work trips, family stays, and longer visits.",
+    title: "Wi-Fi",
+    text: "Fast and reliable internet access",
     icon: Wifi,
   },
   {
-    title: "Housekeeping services",
-    text: "Clean, cared-for spaces with practical support during your stay.",
-    icon: Sparkles,
+    title: "Air conditioning",
+    text: "Comfortable rooms with air conditioning",
+    icon: AirVent,
   },
   {
-    title: "Secure parking",
-    text: "On-site parking and controlled access for peace of mind.",
-    icon: Car,
+    title: "Smart TV",
+    text: "Entertainment available in the apartment",
+    icon: MonitorPlay,
+  },
+  {
+    title: "Kitchen",
+    text: "Convenient kitchen facilities",
+    icon: CookingPot,
   },
   {
     title: "Security",
-    text: "A secure environment for business guests, families, and travelers.",
+    text: "Safe and secure environment",
     icon: ShieldCheck,
   },
   {
-    title: "Short and long stays",
-    text: "Flexible accommodation for overnight trips, weekly bookings, or monthly stays.",
-    icon: CalendarDays,
+    title: "Parking",
+    text: "Secure on-site parking",
+    icon: Car,
   },
   {
-    title: "Peaceful environment",
-    text: "Landscaped outdoor areas and private rooms designed for quiet downtime.",
-    icon: Leaf,
+    title: "Swimming pool",
+    text: "Relax and enjoy the outdoor pool area",
+    icon: Waves,
   },
   {
-    title: "Privacy",
-    text: "Your own furnished apartment with space to settle in and feel at home.",
-    icon: KeyRound,
+    title: "Cleaning services",
+    text: "Clean and well-maintained apartments",
+    icon: Sparkles,
   },
 ];
 
@@ -170,4 +200,62 @@ export const pricing = [
     rate: "Contact for rate",
     note: "Suitable for longer assignments, relocation support, or extended family visits.",
   },
+];
+
+export const landmarks = [
+  "150 metres from the New Apostolic Church",
+  "[ADD NEARBY LANDMARK 2]",
+  "[ADD NEARBY LANDMARK 3]",
+];
+
+export const testimonials = [
+  {
+    name: "Guest Review",
+    rating: 5,
+    text: "Very clean and comfortable apartments. The location is convenient and the staff were very helpful.",
+  },
+  {
+    name: "Guest Review",
+    rating: 5,
+    text: "Perfect place for a short stay in Choma. Secure parking, good Wi-Fi, and a peaceful environment.",
+  },
+  {
+    name: "Guest Review",
+    rating: 5,
+    text: "The apartment was modern, well furnished, and exactly what we needed for our stay.",
+  },
+];
+
+export const footerLinks = [
+  { label: "Home", href: "#top" },
+  { label: "Apartments", href: "#apartments" },
+  { label: "Amenities", href: "#amenities" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Location", href: "#location" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "Contact", href: "#contact" },
+];
+
+export const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/1Gqg7K83dF/?mibextid=wwXIfr",
+  },
+  {
+    label: "Instagram",
+    href: "",
+    placeholder: "[ADD INSTAGRAM LINK HERE]",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@chipos.lux.apartm?_r=1&_t=ZS-96MLkMCBryH",
+  },
+];
+
+export const trustPoints = [
+  { icon: BedDouble, label: "Fully furnished" },
+  { icon: ShieldCheck, label: "Secure setting" },
+  { icon: MapPin, label: "Choma location" },
+  { icon: CalendarDays, label: "Short & long stays" },
+  { icon: Star, label: "Guest-focused service" },
 ];

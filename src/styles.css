@@ -59,10 +59,15 @@
     @apply text-[0.78rem] font-extrabold uppercase tracking-[0.18em] text-ink/70 transition hover:text-wine focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine;
   }
 
+  .brand-mark {
+    @apply flex h-11 w-14 shrink-0 items-center justify-center rounded bg-white shadow-sm ring-1 ring-sand/70 sm:h-12 sm:w-16;
+  }
+
   .btn-primary,
   .btn-secondary,
   .btn-light,
-  .btn-gold {
+  .btn-gold,
+  .btn-whatsapp {
     @apply inline-flex min-h-12 max-w-full items-center gap-2 rounded px-5 py-3 text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4;
   }
 
@@ -82,6 +87,10 @@
     @apply bg-champagne text-ink hover:-translate-y-0.5 hover:bg-[#d8b86f] focus-visible:outline-champagne;
   }
 
+  .btn-whatsapp {
+    @apply bg-[#1f8f54] text-white shadow-[0_14px_30px_rgba(31,143,84,0.26)] hover:-translate-y-0.5 hover:bg-[#187846] focus-visible:outline-[#1f8f54];
+  }
+
   .icon-link {
     @apply inline-flex items-center gap-2 text-sm font-bold text-ink/75 transition hover:text-wine;
   }
@@ -97,8 +106,8 @@
   .hero-shade {
     @apply absolute inset-0;
     background:
-      linear-gradient(90deg, rgba(4, 18, 31, 0.9) 0%, rgba(7, 31, 49, 0.68) 42%, rgba(7, 31, 49, 0.18) 76%, rgba(7, 31, 49, 0.08) 100%),
-      linear-gradient(180deg, rgba(4, 18, 31, 0.18) 0%, rgba(4, 18, 31, 0.58) 100%);
+      linear-gradient(90deg, rgba(4, 18, 31, 0.88) 0%, rgba(7, 31, 49, 0.68) 44%, rgba(7, 31, 49, 0.2) 78%, rgba(7, 31, 49, 0.12) 100%),
+      linear-gradient(180deg, rgba(4, 18, 31, 0.16) 0%, rgba(4, 18, 31, 0.62) 100%);
   }
 
   .hero-stat {
@@ -111,6 +120,22 @@
 
   .arrival-strip {
     @apply grid gap-6 rounded bg-ivory p-5 shadow-soft ring-1 ring-white/70 lg:grid-cols-[0.92fr_1fr] lg:items-center lg:p-7;
+  }
+
+  .trust-grid {
+    @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .trust-chip {
+    @apply flex min-h-14 items-center gap-3 rounded border border-sand/80 bg-white px-4 py-3 text-sm font-extrabold text-ink shadow-sm;
+  }
+
+  .trust-chip svg {
+    @apply shrink-0 text-wine;
+  }
+
+  .section-heading {
+    @apply grid gap-6 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:[&>p]:justify-self-end;
   }
 
   .arrival-fact {
@@ -137,6 +162,34 @@
     @apply absolute -bottom-8 right-4 h-40 w-32 rounded object-cover shadow-card ring-4 ring-ivory sm:h-52 sm:w-44 lg:-right-2;
   }
 
+  .apartment-grid {
+    @apply grid gap-5 md:grid-cols-3;
+  }
+
+  .apartment-card {
+    @apply overflow-hidden rounded bg-white shadow-card ring-1 ring-ink/5 transition hover:-translate-y-1 hover:shadow-soft;
+  }
+
+  .apartment-card img {
+    @apply aspect-[4/3] w-full object-cover;
+  }
+
+  .apartment-card h3 {
+    @apply font-display text-3xl font-bold leading-tight text-ink;
+  }
+
+  .apartment-card p {
+    @apply mt-3 text-sm leading-7 text-ink/70;
+  }
+
+  .cta-strip {
+    @apply flex flex-col items-start justify-between gap-4 rounded bg-ink p-5 text-white shadow-card sm:flex-row sm:items-center;
+  }
+
+  .cta-strip p {
+    @apply text-sm font-bold leading-6 text-white/80;
+  }
+
   .gallery-grid {
     @apply grid auto-rows-[19rem] gap-4 md:grid-cols-2 lg:grid-cols-4;
   }
@@ -157,6 +210,10 @@
     @apply absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,rgba(8,43,73,0),rgba(8,43,73,0.9))] px-5 pb-5 pt-24 text-white;
   }
 
+  .gallery-overlay small {
+    @apply mb-2 block text-[0.64rem] font-extrabold uppercase tracking-[0.24em] text-champagne;
+  }
+
   .gallery-overlay span {
     @apply font-display text-3xl font-bold;
   }
@@ -173,12 +230,32 @@
     @apply grid gap-3;
   }
 
+  .amenity-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .amenity-card {
+    @apply rounded bg-white p-5 shadow-sm ring-1 ring-sand/70 transition hover:-translate-y-1 hover:shadow-card;
+  }
+
   .amenity-row {
     @apply grid grid-cols-[auto_1fr] gap-4 rounded border border-sand/80 bg-white/80 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card;
   }
 
   .amenity-icon {
     @apply flex h-11 w-11 items-center justify-center rounded bg-mist text-leaf ring-1 ring-leaf/10;
+  }
+
+  .amenity-card .amenity-icon {
+    @apply mb-5 bg-ivory text-wine ring-wine/10;
+  }
+
+  .amenity-card h3 {
+    @apply text-base font-extrabold text-ink;
+  }
+
+  .amenity-card p {
+    @apply mt-2 text-sm leading-6 text-ink/70;
   }
 
   .amenity-row h3 {
@@ -205,6 +282,34 @@
     @apply rounded border border-white/10 bg-white/[0.08] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.16)] backdrop-blur;
   }
 
+  .video-frame {
+    @apply relative overflow-hidden rounded bg-ink shadow-soft ring-1 ring-ink/10;
+  }
+
+  .video-frame video {
+    @apply block aspect-video w-full bg-ink object-cover;
+  }
+
+  .video-badge {
+    @apply absolute left-4 top-4 inline-flex items-center gap-2 rounded bg-white/90 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur;
+  }
+
+  .review-grid {
+    @apply grid gap-5 md:grid-cols-3;
+  }
+
+  .review-card {
+    @apply rounded bg-white p-6 shadow-card ring-1 ring-ink/5;
+  }
+
+  .review-card p {
+    @apply text-base leading-8 text-ink/75;
+  }
+
+  .review-card strong {
+    @apply mt-6 block text-sm font-extrabold uppercase tracking-[0.18em] text-wine;
+  }
+
   .map-wrap {
     @apply relative overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/10;
   }
@@ -219,6 +324,18 @@
 
   .map-placeholder svg {
     @apply text-wine;
+  }
+
+  .location-panel {
+    @apply rounded border border-sand bg-white p-5 shadow-card;
+  }
+
+  .landmark-row {
+    @apply flex items-center gap-2 rounded bg-ivory px-3 py-2 text-sm font-semibold text-ink/75;
+  }
+
+  .landmark-row svg {
+    @apply shrink-0 text-wine;
   }
 
   .contact-line {
@@ -257,11 +374,31 @@
   .footer-link {
     @apply text-sm font-semibold text-white/70 transition hover:text-champagne;
   }
+
+  .footer {
+    @apply bg-ink py-10 text-white;
+  }
+
+  .footer-grid {
+    @apply grid gap-8 md:grid-cols-2 xl:grid-cols-[1.15fr_0.95fr_0.75fr_0.85fr];
+  }
+
+  .social-link {
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-champagne;
+  }
+
+  .social-link span {
+    @apply flex h-8 w-8 items-center justify-center rounded bg-white/10 text-[0.7rem] font-extrabold uppercase text-champagne;
+  }
+
+  .whatsapp-float {
+    @apply fixed bottom-5 right-5 z-50 flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#1f8f54] px-5 text-sm font-extrabold text-white shadow-[0_14px_36px_rgba(31,143,84,0.34)] transition hover:-translate-y-0.5 hover:bg-[#187846] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f8f54];
+  }
 }
 
 @media (max-width: 640px) {
   .hero-bg {
-    object-position: 74% center;
+    object-position: 43% center;
   }
 
   .hero-shade {

@@ -1,26 +1,36 @@
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
+  ExternalLink,
   Mail,
   MapPin,
   Menu,
   MessageCircle,
   Navigation,
   Phone,
+  PlayCircle,
   Send,
+  Star,
   X,
 } from "lucide-react";
 import {
   amenities,
+  apartmentHighlights,
   business,
   directionsLink,
+  footerLinks,
   galleryItems,
   heroStats,
   images,
+  landmarks,
   mapEmbedUrl,
   pricing,
+  socialLinks,
+  testimonials,
+  trustPoints,
   whatsappLink,
+  whatsappMessage,
 } from "./content";
 
 type BookingForm = {
@@ -36,8 +46,9 @@ type BookingForm = {
 const navItems = [
   { label: "Apartments", href: "#apartments" },
   { label: "Amenities", href: "#amenities" },
-  { label: "Rates", href: "#rates" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
+  { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -58,7 +69,6 @@ function App() {
 
   const mapReady = mapEmbedUrl.startsWith("https://");
   const mapSrc = mapReady ? mapEmbedUrl : "about:blank";
-  const currentYear = useMemo(() => new Date().getFullYear(), []);
   const phoneHref = `tel:${business.phoneDisplay.replace(/\s/g, "")}`;
 
   const handleFieldChange = (field: keyof BookingForm, value: string) => {
@@ -75,7 +85,7 @@ function App() {
     }
 
     const details = [
-      "Hello Chipo's Lux Apartments, I would like to inquire about booking an apartment in Choma.",
+      whatsappMessage,
       "",
       `Full name: ${form.fullName.trim()}`,
       `Phone: ${form.phone.trim()}`,
@@ -98,12 +108,8 @@ function App() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/50 bg-ivory/95 shadow-[0_10px_35px_rgba(8,43,73,0.08)] backdrop-blur-xl">
         <div className="section-shell flex items-center justify-between gap-3 py-3">
           <a href="#top" className="flex min-w-0 items-center gap-3" aria-label="Chipo's Lux Apartments home">
-            <span className="flex h-11 w-14 shrink-0 items-center justify-center rounded bg-white shadow-sm ring-1 ring-sand/70 sm:h-12 sm:w-16">
-              <img
-                src={images.logo}
-                alt="Chipo's Lux Apartments"
-                className="w-14 object-contain sm:w-16"
-              />
+            <span className="brand-mark">
+              <img src={images.logo} alt="Chipo's Lux Apartments" className="w-14 object-contain sm:w-16" />
             </span>
             <span className="min-w-0 leading-tight">
               <span className="block truncate font-display text-[1.2rem] font-bold text-ink sm:text-[1.4rem]">
@@ -115,7 +121,7 @@ function App() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
+          <nav className="hidden items-center gap-6 xl:flex" aria-label="Main navigation">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} className="nav-link">
                 {item.label}
@@ -128,15 +134,15 @@ function App() {
               <Phone aria-hidden="true" size={18} />
               <span>{business.phoneDisplay}</span>
             </a>
-            <a className="btn-primary" href={whatsappLink} target="_blank" rel="noreferrer">
+            <a className="btn-whatsapp" href={whatsappLink} target="_blank" rel="noreferrer">
               <MessageCircle aria-hidden="true" size={18} />
-              Book via WhatsApp
+              Book Now on WhatsApp
             </a>
           </div>
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded border border-sand bg-white text-ink shadow-sm lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded border border-sand bg-white text-ink shadow-sm xl:hidden"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-label="Toggle navigation menu"
@@ -146,7 +152,7 @@ function App() {
         </div>
 
         {menuOpen ? (
-          <nav className="border-t border-sand/70 bg-ivory px-4 pb-5 pt-2 lg:hidden" aria-label="Mobile navigation">
+          <nav className="border-t border-sand/70 bg-ivory px-4 pb-5 pt-2 xl:hidden" aria-label="Mobile navigation">
             <div className="mx-auto grid max-w-7xl gap-1">
               {navItems.map((item) => (
                 <a
@@ -158,10 +164,16 @@ function App() {
                   {item.label}
                 </a>
               ))}
-              <a className="btn-primary mt-2 justify-center" href={whatsappLink} target="_blank" rel="noreferrer">
-                <MessageCircle aria-hidden="true" size={18} />
-                Book via WhatsApp
-              </a>
+              <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                <a className="btn-secondary justify-center" href={phoneHref}>
+                  <Phone aria-hidden="true" size={18} />
+                  {business.phoneDisplay}
+                </a>
+                <a className="btn-whatsapp justify-center" href={whatsappLink} target="_blank" rel="noreferrer">
+                  <MessageCircle aria-hidden="true" size={18} />
+                  Book Now
+                </a>
+              </div>
             </div>
           </nav>
         ) : null}
@@ -170,31 +182,28 @@ function App() {
       <main id="top">
         <section className="hero-section">
           <img
-            src={images.heroExterior}
-            alt="Chipo's Lux Apartments exterior with courtyard and pool"
+            src={images.heroFront}
+            alt="Front exterior of Chipolux Apartment in Choma"
             className="hero-bg"
           />
           <div className="hero-shade" />
 
           <div className="section-shell relative z-10 flex min-h-[calc(100svh-3rem)] flex-col justify-end pb-10 pt-32 lg:pb-14">
-            <div className="max-w-4xl text-white">
+            <div className="max-w-5xl text-white">
               <p className="eyebrow text-champagne">Choma furnished accommodation</p>
-              <h1 className="mt-5 max-w-4xl font-display text-[2.82rem] font-bold leading-[0.94] sm:text-6xl lg:text-7xl">
-                <span className="block sm:inline">Fully</span>{" "}
-                <span className="block sm:inline">furnished</span>{" "}
-                <span className="block sm:inline">apartments in</span>{" "}
-                <span className="block sm:inline">Choma</span>
+              <h1 className="mt-5 max-w-5xl font-display text-[2.75rem] font-bold leading-[0.94] sm:text-6xl lg:text-7xl">
+                Luxury Fully Furnished Apartments in Choma
               </h1>
-              <p className="mt-6 max-w-[20rem] text-base leading-8 text-white/80 sm:max-w-2xl sm:text-lg">
-                Comfortable, secure, and affordable luxury apartments for short and long stays in Southern Province.
+              <p className="mt-6 max-w-[42rem] text-base leading-8 text-white/84 sm:text-lg">
+                Comfortable short & long stay apartments with modern amenities, secure parking, Wi-Fi and excellent customer service.
               </p>
               <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                <a className="btn-primary w-full justify-center sm:w-auto" href={whatsappLink} target="_blank" rel="noreferrer">
+                <a className="btn-whatsapp w-full justify-center sm:w-auto" href={whatsappLink} target="_blank" rel="noreferrer">
                   <MessageCircle aria-hidden="true" size={19} />
-                  Book via WhatsApp
+                  Book Now on WhatsApp
                 </a>
-                <a className="btn-light w-full justify-center sm:w-auto" href="#apartments">
-                  View Apartments
+                <a className="btn-light w-full justify-center sm:w-auto" href="#gallery">
+                  View Apartments / View Gallery
                   <ArrowRight aria-hidden="true" size={19} />
                 </a>
               </div>
@@ -219,20 +228,19 @@ function App() {
                   {business.tagline}
                 </p>
                 <p className="mt-2 max-w-2xl font-display text-3xl font-bold leading-tight text-ink">
-                  A quiet, private base in Choma with the daily essentials already handled.
+                  A secure, comfortable base for work trips, family visits, and longer stays in Choma.
                 </p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Location", business.locationNote],
-                  ["Stay type", "Short and long stays"],
-                  ["Contact", business.phoneDisplay],
-                ].map(([label, value]) => (
-                  <div key={label} className="arrival-fact">
-                    <span>{label}</span>
-                    <strong>{value}</strong>
-                  </div>
-                ))}
+              <div className="trust-grid">
+                {trustPoints.map((point) => {
+                  const Icon = point.icon;
+                  return (
+                    <div key={point.label} className="trust-chip">
+                      <Icon aria-hidden="true" size={18} />
+                      <span>{point.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -243,23 +251,27 @@ function App() {
             <p className="eyebrow">About the apartments</p>
             <h2 className="section-title mt-4">Comfortable stays with the essentials taken care of</h2>
             <p className="copy-large mt-6">
-              Chipo's Lux Apartments provides fully furnished apartments in Choma for guests who want a peaceful,
-              private, and convenient place to stay. The apartments are suitable for business travelers, families,
-              tourists, and individuals looking for short-stay or long-stay accommodation.
+              Chipo's Lux Apartments provides furnished apartments in Choma for guests who want a clean, private,
+              and convenient place to stay. The apartments are suitable for business travelers, families, tourists,
+              and individuals looking for short-stay or long-stay accommodation.
             </p>
+            <a className="btn-secondary mt-7" href="#contact">
+              Ask About Availability
+              <ArrowRight aria-hidden="true" size={18} />
+            </a>
           </div>
 
           <div className="about-collage">
             <img
-              src={images.heroLiving}
-              alt="Furnished living room at Chipo's Lux Apartments"
+              src={images.livingRoom}
+              alt="Living room at Chipo's Lux Apartments"
               className="about-main"
               loading="lazy"
               decoding="async"
             />
             <img
-              src={images.wardrobe}
-              alt="Apartment wardrobe and storage"
+              src={images.bedroomWarm}
+              alt="Furnished bedroom at Chipo's Lux Apartments"
               className="about-inset"
               loading="lazy"
               decoding="async"
@@ -269,14 +281,49 @@ function App() {
 
         <section id="apartments" className="scroll-mt-24 bg-cream py-20 lg:py-28">
           <div className="section-shell">
-            <div className="grid gap-6 lg:grid-cols-[0.72fr_1fr] lg:items-end">
+            <div className="section-heading">
               <div>
-                <p className="eyebrow">Apartment showcase</p>
-                <h2 className="section-title mt-4">A real look at the apartments and outdoor spaces</h2>
+                <p className="eyebrow">Apartments</p>
+                <h2 className="section-title mt-4">Designed for easy, comfortable stays</h2>
               </div>
-              <p className="copy max-w-2xl lg:justify-self-end">
-                These are the actual Chipo's Lux Apartments photos, curated into the areas guests care about first:
-                arrival, lounge, bedroom, kitchen, bathroom, and parking.
+              <p className="copy max-w-2xl">
+                Each apartment is set up for guests who want practical comfort: furnished rooms, seating, entertainment,
+                security, and easy booking through WhatsApp.
+              </p>
+            </div>
+
+            <div className="apartment-grid mt-10">
+              {apartmentHighlights.map((item) => (
+                <article key={item.title} className="apartment-card">
+                  <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
+                  <div className="p-5">
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="cta-strip mt-8">
+              <p>Ready to check dates or ask about rates?</p>
+              <a className="btn-whatsapp" href={whatsappLink} target="_blank" rel="noreferrer">
+                <MessageCircle aria-hidden="true" size={18} />
+                Book Now on WhatsApp
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="gallery" className="scroll-mt-24 py-20 lg:py-28">
+          <div className="section-shell">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">Gallery</p>
+                <h2 className="section-title mt-4">A clear look at the rooms and property</h2>
+              </div>
+              <p className="copy max-w-2xl">
+                Images are arranged by area so guests can quickly understand the bedrooms, bathrooms, lounge space,
+                and exterior before making an inquiry.
               </p>
             </div>
 
@@ -290,6 +337,7 @@ function App() {
                     decoding="async"
                   />
                   <div className="gallery-overlay">
+                    <small>{item.category}</small>
                     <span>{item.title}</span>
                     <p>{item.detail}</p>
                   </div>
@@ -299,36 +347,28 @@ function App() {
           </div>
         </section>
 
-        <section id="amenities" className="scroll-mt-24 py-20 lg:py-28">
-          <div className="section-shell grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-start">
-            <div className="sticky-copy">
-              <p className="eyebrow">Amenities</p>
-              <h2 className="section-title mt-4">Practical comfort, not empty decoration</h2>
-              <p className="copy mt-5">
-                The offer stays clear: furnished rooms, clean spaces, secure access, and useful amenities for guests
-                who need somewhere reliable to stay in Choma.
+        <section id="amenities" className="scroll-mt-24 bg-mist py-20 lg:py-28">
+          <div className="section-shell">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">Amenities</p>
+                <h2 className="section-title mt-4">Modern Amenities for a Comfortable Stay</h2>
+              </div>
+              <p className="copy max-w-2xl">
+                Enjoy everything you need for a relaxing short or long stay at Chipolux Apartment.
               </p>
-              <img
-                src={images.bathroomDetail}
-                alt="Bathroom shelf detail at Chipo's Lux Apartments"
-                className="mt-8 aspect-[5/4] w-full rounded object-cover shadow-card"
-                loading="lazy"
-                decoding="async"
-              />
             </div>
 
-            <div className="amenity-list">
+            <div className="amenity-grid mt-10">
               {amenities.map((amenity) => {
                 const Icon = amenity.icon;
                 return (
-                  <article key={amenity.title} className="amenity-row">
+                  <article key={amenity.title} className="amenity-card">
                     <span className="amenity-icon">
-                      <Icon aria-hidden="true" size={22} />
+                      <Icon aria-hidden="true" size={23} />
                     </span>
-                    <div>
-                      <h3>{amenity.title}</h3>
-                      <p>{amenity.text}</p>
-                    </div>
+                    <h3>{amenity.title}</h3>
+                    <p>{amenity.text}</p>
                   </article>
                 );
               })}
@@ -336,10 +376,36 @@ function App() {
           </div>
         </section>
 
+        <section className="py-20 lg:py-28">
+          <div className="section-shell grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:items-center">
+            <div>
+              <p className="eyebrow">Video tour</p>
+              <h2 className="section-title mt-4">See the apartment feel before you book</h2>
+              <p className="copy mt-5">
+                Take a quick look through the apartment spaces, finishes, and property setting before sending an inquiry.
+              </p>
+              <a className="btn-whatsapp mt-7" href={whatsappLink} target="_blank" rel="noreferrer">
+                <MessageCircle aria-hidden="true" size={18} />
+                Book Now on WhatsApp
+              </a>
+            </div>
+            <div className="video-frame">
+              <video controls preload="metadata" poster={images.livingRoom}>
+                <source src={images.videoTour} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="video-badge">
+                <PlayCircle aria-hidden="true" size={18} />
+                Property video tour
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="rates" className="scroll-mt-24">
           <div className="rates-panel">
             <img
-              src={images.living}
+              src={images.livingRoom}
               alt="Living room seating at Chipo's Lux Apartments"
               className="rates-bg"
               loading="lazy"
@@ -347,12 +413,12 @@ function App() {
             />
             <div className="rates-shade" />
             <div className="section-shell relative z-10 py-20 text-white lg:py-28">
-              <div className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
+              <div className="section-heading">
                 <div>
                   <p className="eyebrow text-champagne">Rates & Booking</p>
                   <h2 className="section-title mt-4 text-white">Flexible stays, quoted directly</h2>
                 </div>
-                <p className="copy max-w-2xl text-white/75 lg:justify-self-end">
+                <p className="copy max-w-2xl text-white/75">
                   Rates may vary depending on length of stay, number of guests, and availability. Contact us directly
                   for the latest pricing.
                 </p>
@@ -379,7 +445,35 @@ function App() {
           </div>
         </section>
 
-        <section id="location" className="scroll-mt-24 py-20 lg:py-28">
+        <section id="reviews" className="scroll-mt-24 py-20 lg:py-28">
+          <div className="section-shell">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">Guest reviews</p>
+                <h2 className="section-title mt-4">What guests can expect</h2>
+              </div>
+              <p className="copy max-w-2xl">
+                A simple guest feedback layout that can be updated with verified reviews when they are ready.
+              </p>
+            </div>
+
+            <div className="review-grid mt-10">
+              {testimonials.map((review) => (
+                <article key={review.text} className="review-card">
+                  <div className="flex gap-1 text-champagne" aria-label={`${review.rating} star rating`}>
+                    {Array.from({ length: review.rating }).map((_, index) => (
+                      <Star key={index} size={18} fill="currentColor" aria-hidden="true" />
+                    ))}
+                  </div>
+                  <p className="mt-5">{review.text}</p>
+                  <strong>{review.name}</strong>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="location" className="scroll-mt-24 bg-cream py-20 lg:py-28">
           <div className="section-shell grid gap-10 lg:grid-cols-[0.92fr_0.68fr] lg:items-center">
             <div className="map-wrap">
               <iframe
@@ -395,32 +489,35 @@ function App() {
               {!mapReady ? (
                 <div className="map-placeholder">
                   <MapPin aria-hidden="true" size={34} />
-                  <span>Choma, Southern Province</span>
+                  <span>[ADD GOOGLE MAPS EMBED LINK HERE]</span>
                 </div>
               ) : null}
             </div>
 
             <div>
               <p className="eyebrow">Location</p>
-              <h2 className="section-title mt-4">Find us in Choma</h2>
+              <h2 className="section-title mt-4">Find Us in Choma</h2>
               <p className="copy mt-5">
-                Located in Choma, Southern Province, Zambia. {business.locationNote}
+                The apartments are conveniently located in Choma with easy access to town, secure parking, and nearby
+                services. {business.locationNote}
               </p>
-              <img
-                src={images.exteriorGarden}
-                alt="Garden exterior at Chipo's Lux Apartments"
-                className="mt-7 aspect-[4/3] w-full rounded object-cover shadow-card"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="mt-5 rounded border border-sand bg-white p-5 shadow-sm">
+
+              <div className="location-panel mt-7">
                 <div className="flex gap-3">
                   <MapPin className="mt-1 shrink-0 text-wine" aria-hidden="true" size={21} />
                   <div>
                     <p className="font-bold text-ink">{business.name}</p>
                     <p className="mt-1 text-sm leading-6 text-ink/70">{business.location}</p>
-                    <p className="mt-1 text-sm leading-6 text-ink/70">{business.locationNote}</p>
+                    <p className="mt-1 text-sm leading-6 text-ink/70">{business.distanceFromTown}</p>
                   </div>
+                </div>
+                <div className="mt-5 grid gap-2">
+                  {landmarks.map((landmark) => (
+                    <div key={landmark} className="landmark-row">
+                      <CheckCircle2 aria-hidden="true" size={17} />
+                      <span>{landmark}</span>
+                    </div>
+                  ))}
                 </div>
                 <a className="btn-secondary mt-5 w-full justify-center" href={directionsLink} target="_blank" rel="noreferrer">
                   <Navigation aria-hidden="true" size={18} />
@@ -435,7 +532,7 @@ function App() {
           <div className="section-shell grid gap-10 lg:grid-cols-[0.72fr_1fr]">
             <div>
               <p className="eyebrow">Contact</p>
-              <h2 className="section-title mt-4">Ask about dates, rates, or a longer stay</h2>
+              <h2 className="section-title mt-4">Book or ask about availability</h2>
               <p className="copy mt-5">
                 Share your preferred dates and guest count. The form opens WhatsApp with your details ready to send.
               </p>
@@ -448,6 +545,10 @@ function App() {
                 <a className="contact-line" href={`mailto:${business.email}`}>
                   <Mail aria-hidden="true" size={20} />
                   <span>{business.email}</span>
+                </a>
+                <a className="contact-line" href={whatsappLink} target="_blank" rel="noreferrer">
+                  <MessageCircle aria-hidden="true" size={20} />
+                  <span>WhatsApp: {business.phoneDisplay}</span>
                 </a>
               </div>
             </div>
@@ -519,7 +620,7 @@ function App() {
 
               {formError ? <p className="mt-4 rounded bg-wine/10 px-4 py-3 text-sm font-semibold text-wine">{formError}</p> : null}
 
-              <button className="btn-primary mt-6 w-full justify-center" type="submit">
+              <button className="btn-whatsapp mt-6 w-full justify-center" type="submit">
                 <Send aria-hidden="true" size={18} />
                 Send Inquiry on WhatsApp
               </button>
@@ -528,34 +629,60 @@ function App() {
         </section>
       </main>
 
-      <footer className="bg-ink py-10 text-white">
-        <div className="section-shell grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+      <footer className="footer">
+        <div className="section-shell footer-grid">
           <div>
             <img src={images.logo} alt="Chipo's Lux Apartments" className="h-14 w-auto rounded bg-white p-2" />
             <p className="mt-4 max-w-md text-sm leading-6 text-white/70">
-              Fully furnished apartments in Choma for short and long stays.
+              Luxury fully furnished apartments in Choma for short and long stays.
             </p>
+            <a className="btn-whatsapp mt-5" href={whatsappLink} target="_blank" rel="noreferrer">
+              <MessageCircle aria-hidden="true" size={18} />
+              Book Now on WhatsApp
+            </a>
           </div>
+
           <div>
             <p className="footer-title">Contact</p>
             <p className="footer-text">{business.location}</p>
             <p className="footer-text">{business.locationNote}</p>
-            <p className="footer-text">Phone / WhatsApp: {business.phoneDisplay}</p>
+            <p className="footer-text">Phone: {business.phoneDisplay}</p>
+            <p className="footer-text">WhatsApp: {business.phoneDisplay}</p>
             <p className="footer-text">Email: {business.email}</p>
           </div>
+
           <div>
             <p className="footer-title">Quick links</p>
             <div className="mt-3 grid gap-2">
-              {navItems.map((item) => (
+              {footerLinks.map((item) => (
                 <a key={item.href} href={item.href} className="footer-link">
                   {item.label}
                 </a>
               ))}
             </div>
           </div>
+
+          <div>
+            <p className="footer-title">Social media</p>
+            <div className="mt-3 grid gap-2">
+              {socialLinks.map((item) =>
+                item.href ? (
+                  <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="social-link">
+                    <span>{item.label.slice(0, 2)}</span>
+                    {item.label}
+                    <ExternalLink aria-hidden="true" size={14} />
+                  </a>
+                ) : (
+                  <p key={item.label} className="footer-text">
+                    {item.label}: {item.placeholder}
+                  </p>
+                ),
+              )}
+            </div>
+          </div>
         </div>
         <div className="section-shell mt-8 border-t border-white/10 pt-5 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
-          Copyright {currentYear} Chipo's Lux Apartments. All rights reserved.
+          &copy; 2025 Chipolux Apartment. All rights reserved.
         </div>
       </footer>
 
@@ -563,10 +690,11 @@ function App() {
         href={whatsappLink}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#1f8f54] text-white shadow-[0_14px_36px_rgba(31,143,84,0.34)] transition hover:-translate-y-0.5 hover:bg-[#187846] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f8f54]"
+        className="whatsapp-float"
         aria-label="Book Chipo's Lux Apartments on WhatsApp"
       >
         <MessageCircle aria-hidden="true" size={25} />
+        <span>Book</span>
       </a>
     </div>
   );

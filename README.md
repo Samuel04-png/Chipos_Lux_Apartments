@@ -36,9 +36,12 @@ Do not point GitHub Pages at `main` / `/root`, because that serves the unbuilt V
 ## Where to update content
 
 - Website images: curated, optimized copies live in `public/images/site`.
+- Latest Chipolux photos use semantic filenames such as `chipolux-front-exterior.jpg`, `chipolux-living-room.jpg`, `chipolux-bedroom-wide.jpg`, and `chipolux-bathroom-shower.jpg`.
+- Website video: the compressed web version lives in `public/videos/chipolux-video-tour.mp4`. Keep the original 4K video outside the repo.
 - Original apartment photos: keep them in `public/images`; the current site selection is mapped in `src/content.ts`.
 - Rates: update the `pricing` array in `src/content.ts`.
-- Google Maps: replace `mapEmbedUrl` in `src/content.ts` with the `src` value from a normal Google Maps iframe embed.
+- Google Maps: update `directionsLink` and `mapEmbedUrl` in `src/content.ts`.
+- Location placeholders: update `business.distanceFromTown`, `landmarks`, and the Instagram placeholder in `socialLinks`.
 - WhatsApp number: update `business.whatsappNumber` and `business.phoneDisplay` in `src/content.ts`.
 - Email and location: update the `business` object in `src/content.ts`.
 
