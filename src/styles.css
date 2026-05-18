@@ -314,6 +314,42 @@
     @apply mt-6 block text-sm font-extrabold uppercase tracking-[0.18em] text-wine;
   }
 
+  .career-panel {
+    @apply grid gap-8 rounded bg-ink p-5 text-white shadow-soft ring-1 ring-ink/10 lg:grid-cols-[0.82fr_1fr] lg:items-center lg:p-8;
+  }
+
+  .career-panel .section-title {
+    @apply text-white;
+  }
+
+  .career-panel .copy {
+    @apply text-white/75;
+  }
+
+  .career-intro {
+    @apply max-w-2xl;
+  }
+
+  .career-grid {
+    @apply grid gap-4;
+  }
+
+  .career-card {
+    @apply grid grid-cols-[auto_1fr] gap-4 rounded border border-white/10 bg-white/[0.08] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.14)] backdrop-blur;
+  }
+
+  .career-card svg {
+    @apply mt-1 shrink-0 text-champagne;
+  }
+
+  .career-card h3 {
+    @apply text-base font-extrabold text-white;
+  }
+
+  .career-card p {
+    @apply mt-2 text-sm leading-6 text-white/70;
+  }
+
   .map-wrap {
     @apply relative overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/10;
   }
@@ -395,8 +431,40 @@
     @apply flex h-8 w-8 items-center justify-center rounded bg-white/10 text-[0.7rem] font-extrabold uppercase text-champagne;
   }
 
-  .whatsapp-float {
-    @apply fixed bottom-5 right-5 z-50 flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#1f8f54] px-5 text-sm font-extrabold text-white shadow-[0_14px_36px_rgba(31,143,84,0.34)] transition hover:-translate-y-0.5 hover:bg-[#187846] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f8f54];
+  .floating-socials {
+    @apply fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2;
+  }
+
+  .floating-social-link {
+    @apply inline-flex min-h-12 max-w-[15rem] items-center justify-center gap-2 rounded-full border border-white/50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] shadow-[0_14px_36px_rgba(8,43,73,0.22)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4;
+  }
+
+  .floating-social-link svg {
+    @apply shrink-0;
+  }
+
+  .floating-social-link.is-whatsapp {
+    @apply min-h-14 bg-[#1f8f54] text-white hover:bg-[#187846] focus-visible:outline-[#1f8f54];
+  }
+
+  .floating-social-link.is-facebook {
+    @apply bg-white text-ink hover:text-[#1877f2] focus-visible:outline-[#1877f2];
+  }
+
+  .floating-social-link.is-tiktok {
+    @apply bg-ink text-white hover:bg-[#111827] focus-visible:outline-champagne;
+  }
+
+  .floating-social-badge {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.68rem] font-black uppercase tracking-normal;
+  }
+
+  .is-facebook .floating-social-badge {
+    @apply bg-[#1877f2] text-white;
+  }
+
+  .is-tiktok .floating-social-badge {
+    @apply bg-white text-ink;
   }
 }
 
@@ -409,6 +477,21 @@
     background:
       linear-gradient(90deg, rgba(4, 18, 31, 0.72) 0%, rgba(7, 31, 49, 0.34) 70%, rgba(7, 31, 49, 0.18) 100%),
       linear-gradient(180deg, rgba(4, 18, 31, 0.12) 0%, rgba(4, 18, 31, 0.6) 100%);
+  }
+
+  .floating-socials {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .floating-social-link {
+    min-width: 3rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .floating-social-link:not(.is-whatsapp) .floating-social-label {
+    display: none;
   }
 }
 

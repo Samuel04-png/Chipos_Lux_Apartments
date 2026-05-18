@@ -50,6 +50,13 @@ export const whatsappLink = `https://wa.me/${business.whatsappNumber}?text=${enc
   whatsappMessage,
 )}`;
 
+export const careersWhatsappMessage =
+  "Hello, I would like to ask about career opportunities at Chipolux Apartment.";
+
+export const careersWhatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
+  careersWhatsappMessage,
+)}`;
+
 export const directionsLink = "https://maps.google.com/?q=-16.809271,27.001781";
 
 // Uses the provided coordinates in a normal Google Maps iframe embed.
@@ -224,6 +231,21 @@ export const testimonials = [
   },
 ];
 
+export const careerAreas = [
+  {
+    title: "Guest care & bookings",
+    text: "Friendly communication, guest check-ins, and support for booking inquiries.",
+  },
+  {
+    title: "Housekeeping & apartment care",
+    text: "Keeping rooms clean, fresh, and ready for short or long stay guests.",
+  },
+  {
+    title: "Property support",
+    text: "Helping maintain a secure, tidy, and welcoming apartment environment.",
+  },
+];
+
 export const footerLinks = [
   { label: "Home", href: "#top" },
   { label: "Apartments", href: "#apartments" },
@@ -231,6 +253,7 @@ export const footerLinks = [
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
   { label: "Reviews", href: "#reviews" },
+  { label: "Careers", href: "#careers" },
   { label: "Contact", href: "#contact" },
 ];
 

@@ -41,8 +41,9 @@ Do not point GitHub Pages at `main` / `/root`, because that serves the unbuilt V
 - Original apartment photos: keep them in `public/images`; the current site selection is mapped in `src/content.ts`.
 - Rates: update the `pricing` array in `src/content.ts`.
 - Google Maps: update `directionsLink` and `mapEmbedUrl` in `src/content.ts`.
-- Location placeholders: update `business.distanceFromTown`, `landmarks`, and the Instagram placeholder in `socialLinks`.
+- Location details: update `business.locationNote`, `business.distanceFromTown`, `landmarks`, `directionsLink`, and `mapEmbedUrl` in `src/content.ts`.
 - WhatsApp number: update `business.whatsappNumber` and `business.phoneDisplay` in `src/content.ts`.
 - Email and location: update the `business` object in `src/content.ts`.
+- Careers content: update `careerAreas` and `careersWhatsappMessage` in `src/content.ts`.
 
 No environment variables are required. The booking form opens WhatsApp with the entered details and does not require a backend.

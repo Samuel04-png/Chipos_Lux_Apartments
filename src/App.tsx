@@ -18,6 +18,8 @@ import {
   amenities,
   apartmentHighlights,
   business,
+  careerAreas,
+  careersWhatsappLink,
   directionsLink,
   footerLinks,
   galleryItems,
@@ -49,7 +51,27 @@ const navItems = [
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
   { label: "Reviews", href: "#reviews" },
+  { label: "Careers", href: "#careers" },
   { label: "Contact", href: "#contact" },
+];
+
+const floatingSocialItems = [
+  {
+    label: "Book",
+    ariaLabel: "Book Chipo's Lux Apartments on WhatsApp",
+    href: whatsappLink,
+    shortLabel: "WA",
+    kind: "whatsapp",
+  },
+  ...socialLinks
+    .filter((item) => item.href && (item.label === "Facebook" || item.label === "TikTok"))
+    .map((item) => ({
+      label: item.label,
+      ariaLabel: `Open Chipo's Lux Apartments on ${item.label}`,
+      href: item.href,
+      shortLabel: item.label === "Facebook" ? "FB" : "TT",
+      kind: item.label.toLowerCase(),
+    })),
 ];
 
 const initialForm: BookingForm = {
@@ -97,6 +119,9 @@ function App() {
   const mapReady = mapEmbedUrl.startsWith("https://");
   const mapSrc = mapReady ? mapEmbedUrl : "about:blank";
   const phoneHref = `tel:${business.phoneDisplay.replace(/\s/g, "")}`;
+  const careersEmailHref = `mailto:${business.email}?subject=${encodeURIComponent(
+    "Career inquiry - Chipolux Apartment",
+  )}`;
 
   useEffect(() => {
     const updateHeroMedia = () => setUseHeroVideo(shouldUseHeroVideo());
@@ -580,6 +605,44 @@ function App() {
           </div>
         </section>
 
+        <section id="careers" className="scroll-mt-24 py-20 lg:py-28">
+          <div className="section-shell">
+            <div className="career-panel">
+              <div className="career-intro">
+                <p className="eyebrow">Careers</p>
+                <h2 className="section-title mt-4">Work with Chipolux Apartment</h2>
+                <p className="copy mt-5">
+                  Interested in hospitality, guest support, or apartment care? Send your details and the kind of role
+                  you are looking for. Career opportunities may depend on availability, but every inquiry is kept clear
+                  and direct.
+                </p>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <a className="btn-whatsapp justify-center" href={careersWhatsappLink} target="_blank" rel="noreferrer">
+                    <MessageCircle aria-hidden="true" size={18} />
+                    Send Career Inquiry
+                  </a>
+                  <a className="btn-secondary justify-center" href={careersEmailHref}>
+                    <Mail aria-hidden="true" size={18} />
+                    Email Your Details
+                  </a>
+                </div>
+              </div>
+
+              <div className="career-grid">
+                {careerAreas.map((area) => (
+                  <article key={area.title} className="career-card">
+                    <CheckCircle2 aria-hidden="true" size={20} />
+                    <div>
+                      <h3>{area.title}</h3>
+                      <p>{area.text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="contact" className="scroll-mt-24 bg-mist py-20 lg:py-28">
           <div className="section-shell grid gap-10 lg:grid-cols-[0.72fr_1fr]">
             <div>
@@ -738,16 +801,25 @@ function App() {
         </div>
       </footer>
 
-      <a
-        href={whatsappLink}
-        target="_blank"
-        rel="noreferrer"
-        className="whatsapp-float"
-        aria-label="Book Chipo's Lux Apartments on WhatsApp"
-      >
-        <MessageCircle aria-hidden="true" size={25} />
-        <span>Book</span>
-      </a>
+      <div className="floating-socials" aria-label="Quick contact links">
+        {floatingSocialItems.map((item) => (
+          <a
+            key={item.kind}
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            className={`floating-social-link is-${item.kind}`}
+            aria-label={item.ariaLabel}
+          >
+            {item.kind === "whatsapp" ? (
+              <MessageCircle aria-hidden="true" size={23} />
+            ) : (
+              <span className="floating-social-badge">{item.shortLabel}</span>
+            )}
+            <span className="floating-social-label">{item.label}</span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
