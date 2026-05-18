@@ -43,7 +43,7 @@ Do not point GitHub Pages at `main` / `/root`, because that serves the unbuilt V
 - Google Maps: update `directionsLink` and `mapEmbedUrl` in `src/content.ts`.
 - Location details: update `business.locationNote`, `business.distanceFromTown`, `landmarks`, `directionsLink`, and `mapEmbedUrl` in `src/content.ts`.
 - WhatsApp number: update `business.whatsappNumber` and `business.phoneDisplay` in `src/content.ts`.
-- Email and location: update the `business` object in `src/content.ts`.
+- Email and location: update the `business` object in `src/content.ts`. Public inquiries use `business.email`; career inquiries use `business.careersEmail`.
 - Careers content: update `careerAreas` and `careersWhatsappMessage` in `src/content.ts`.
 
 No environment variables are required. The booking form opens WhatsApp with the entered details and does not require a backend.

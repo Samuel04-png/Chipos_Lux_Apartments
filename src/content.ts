@@ -22,7 +22,8 @@ export const business = {
   distanceFromTown: "Approximately 5 minutes from Choma Town.",
   phoneDisplay: "0764937372",
   whatsappNumber: "260764937372",
-  email: "Chipolux1@gmail.com",
+  email: "info@chiposluxapartments.com",
+  careersEmail: "jobs@chiposluxapartments.com",
   tagline: "Home Away From Home",
 };
 
@@ -261,11 +262,6 @@ export const socialLinks = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/share/1Gqg7K83dF/?mibextid=wwXIfr",
-  },
-  {
-    label: "Instagram",
-    href: "",
-    placeholder: "[ADD INSTAGRAM LINK HERE]",
   },
   {
     label: "TikTok",

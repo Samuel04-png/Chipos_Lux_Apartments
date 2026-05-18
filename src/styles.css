@@ -350,6 +350,10 @@
     @apply mt-2 text-sm leading-6 text-white/70;
   }
 
+  .career-email-note {
+    @apply mt-4 text-sm font-bold text-white/65;
+  }
+
   .map-wrap {
     @apply relative overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/10;
   }
@@ -427,8 +431,20 @@
     @apply inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-champagne;
   }
 
-  .social-link span {
-    @apply flex h-8 w-8 items-center justify-center rounded bg-white/10 text-[0.7rem] font-extrabold uppercase text-champagne;
+  .social-icon-badge {
+    @apply flex h-8 w-8 items-center justify-center rounded bg-white/10 text-champagne;
+  }
+
+  .brand-icon {
+    @apply h-5 w-5 shrink-0;
+  }
+
+  .is-facebook .brand-icon {
+    @apply text-[#1877f2];
+  }
+
+  .is-tiktok .brand-icon {
+    @apply text-white;
   }
 
   .floating-socials {
@@ -455,16 +471,8 @@
     @apply bg-ink text-white hover:bg-[#111827] focus-visible:outline-champagne;
   }
 
-  .floating-social-badge {
-    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.68rem] font-black uppercase tracking-normal;
-  }
-
-  .is-facebook .floating-social-badge {
-    @apply bg-[#1877f2] text-white;
-  }
-
-  .is-tiktok .floating-social-badge {
-    @apply bg-white text-ink;
+  .floating-social-link .brand-icon {
+    @apply h-6 w-6;
   }
 }
 
