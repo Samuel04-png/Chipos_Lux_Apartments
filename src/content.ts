@@ -72,6 +72,11 @@ export const heroStats = [
 
 export const apartmentHighlights = [
   {
+    title: "Secure property setting",
+    text: "A private exterior with greenery, secure parking, and convenient access around the apartments.",
+    image: images.exteriorGarden,
+  },
+  {
     title: "Modern bedrooms",
     text: "Comfortable furnished bedrooms with air conditioning, soft bedding, and a calm private feel.",
     image: images.bedroomWide,
@@ -80,11 +85,6 @@ export const apartmentHighlights = [
     title: "Relaxed living spaces",
     text: "A polished lounge area with smart TV, seating, and room to settle in after a day in Choma.",
     image: images.livingRoom,
-  },
-  {
-    title: "Secure property setting",
-    text: "A private exterior with greenery, secure parking, and convenient access around the apartments.",
-    image: images.exteriorGarden,
   },
 ];
 
