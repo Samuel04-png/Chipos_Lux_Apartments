@@ -29,9 +29,13 @@ export const business = {
 
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
 
+export const homePageLink = import.meta.env.BASE_URL;
+export const jobsPageLink = `${import.meta.env.BASE_URL}jobs/`;
+
 export const images = {
   logo: asset("images/chipos-logo.png"),
-  heroFront: asset("images/site/chipolux-front-exterior.jpg"),
+  heroFront: asset("images/site/chipolux-garden-exterior.jpg"),
+  frontExterior: asset("images/site/chipolux-front-exterior.jpg"),
   exteriorGarden: asset("images/site/chipolux-garden-exterior.jpg"),
   livingRoom: asset("images/site/chipolux-living-room.jpg"),
   bedroomWide: asset("images/site/chipolux-bedroom-wide.jpg"),
@@ -41,6 +45,7 @@ export const images = {
   bathroomVanity: asset("images/site/chipolux-bathroom-vanity.jpg"),
   kitchen: asset("images/site/kitchen-main.jpg"),
   pool: asset("images/site/pool-courtyard.jpg"),
+  hiringAdvert: asset("images/site/chipolux-hiring-advert.jpeg"),
   videoTour: asset("videos/chipolux-video-tour.mp4"),
 };
 
@@ -49,13 +54,6 @@ export const whatsappMessage =
 
 export const whatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
   whatsappMessage,
-)}`;
-
-export const careersWhatsappMessage =
-  "Hello, I would like to ask about career opportunities at Chipolux Apartment.";
-
-export const careersWhatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
-  careersWhatsappMessage,
 )}`;
 
 export const directionsLink = "https://maps.google.com/?q=-16.809271,27.001781";
@@ -92,9 +90,9 @@ export const apartmentHighlights = [
 
 export const galleryItems = [
   {
-    title: "Front exterior",
+    title: "Secure property setting",
     category: "Exterior",
-    detail: "The selected front view of Chipolux Apartment.",
+    detail: "A private exterior with greenery, secure parking, and convenient access around the apartments.",
     image: images.heroFront,
     layout: "wide",
   },
@@ -247,6 +245,85 @@ export const careerAreas = [
   },
 ];
 
+export const hiringDetails = {
+  bannerText: "We're Hiring - Join the Chipo's Lux Apartments Team",
+  intro:
+    "Chipo's Lux Apartments is expanding its team and looking for qualified, dedicated, and service-driven people to join the business.",
+  location: "Choma, Zambia",
+  deadline: "18 June 2025",
+  deadlineNote: "30 days from 19 May 2025, as shown on the supplied advert",
+  applyEmail: business.careersEmail,
+  applicationNote: "Interested candidates should send their CV and NRC copy. Only shortlisted candidates will be contacted.",
+};
+
+export const jobOpenings = [
+  {
+    title: "Apartment Manager",
+    positions: "1 position",
+    responsibilities: [
+      "Oversee day-to-day operations of the apartments.",
+      "Manage bookings, guest check-ins, and customer relations.",
+      "Supervise housekeeping, maintenance, and security staff.",
+      "Maintain cleanliness, hospitality, service delivery, records, reports, and inspections.",
+      "Handle guest concerns professionally and coordinate operational schedules.",
+    ],
+    qualifications: [
+      "Diploma or Degree in Hospitality Management, Business Administration, or a related field.",
+      "Minimum 2 years experience in hospitality, hotel, lodge, or property management.",
+      "Strong leadership, communication, customer service, and organizational skills.",
+      "Proficient in Microsoft Office and basic computer systems.",
+    ],
+  },
+  {
+    title: "Housekeepers",
+    positions: "3 positions",
+    responsibilities: [
+      "Clean and maintain apartments to high standards.",
+      "Change linen, restock supplies, and ensure hygiene.",
+      "Report damages or maintenance issues.",
+      "Care for cleaning equipment and maintain common areas.",
+    ],
+    qualifications: [
+      "Minimum Grade 9 or Grade 12 Certificate.",
+      "At least 1 year experience in cleaning, lodge, hotel, or accommodation is an added advantage.",
+      "Knowledge of cleaning standards and hygiene practices.",
+      "Physically fit, honest, reliable, detail-oriented, and able to follow instructions.",
+    ],
+  },
+  {
+    title: "Security Guards",
+    positions: "2 positions",
+    responsibilities: [
+      "Ensure safety of guests and property.",
+      "Monitor premises and control access.",
+      "Respond to incidents and maintain order.",
+      "Conduct regular patrols, report suspicious activity, and support security procedures.",
+    ],
+    qualifications: [
+      "Experience in security services is an added advantage.",
+      "Physically fit, alert, honest, and disciplined.",
+      "Minimum Grade 12 Certificate or equivalent.",
+      "Able to work shifts including nights, weekends, and holidays.",
+    ],
+  },
+  {
+    title: "Receptionist",
+    positions: "1 position",
+    responsibilities: [
+      "Handle phone calls, WhatsApp inquiries, and walk-in guests professionally.",
+      "Manage online bookings and confirmations across booking platforms.",
+      "Check availability, make reservations, and process payments.",
+      "Keep guest records updated and coordinate with housekeeping and management.",
+    ],
+    qualifications: [
+      "Minimum Grade 12 Certificate or Diploma in Hospitality/Tourism is an added advantage.",
+      "At least 1 year experience in reception, customer service, or hospitality.",
+      "Proficient in Microsoft Office and basic computer skills.",
+      "Smart, friendly, organized, service-oriented, and comfortable with online booking platforms.",
+    ],
+  },
+];
+
 export const footerLinks = [
   { label: "Home", href: "#top" },
   { label: "Apartments", href: "#apartments" },
@@ -254,7 +331,7 @@ export const footerLinks = [
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
   { label: "Reviews", href: "#reviews" },
-  { label: "Careers", href: "#careers" },
+  { label: "Careers", href: jobsPageLink },
   { label: "Contact", href: "#contact" },
 ];
 

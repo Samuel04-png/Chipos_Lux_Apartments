@@ -103,8 +103,77 @@
     @apply absolute inset-0 h-full w-full object-cover object-center;
   }
 
-  .hero-video {
-    @apply block;
+  .hiring-banner-wrap {
+    @apply relative z-30 pt-[4.55rem];
+  }
+
+  .hiring-banner {
+    @apply relative block overflow-hidden border-y border-champagne/35 bg-ink text-white shadow-[0_18px_48px_rgba(8,43,73,0.24)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne;
+    background:
+      linear-gradient(90deg, rgba(200, 164, 93, 0.18), transparent 22%, transparent 78%, rgba(200, 164, 93, 0.14)),
+      linear-gradient(180deg, #0a3152 0%, #061f35 100%);
+  }
+
+  .hiring-banner::before,
+  .hiring-banner::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 z-10;
+  }
+
+  .hiring-banner::before {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 46%, rgba(0, 0, 0, 0.18));
+  }
+
+  .hiring-banner::after {
+    background:
+      linear-gradient(90deg, #061f35 0%, rgba(6, 31, 53, 0) 12%, rgba(6, 31, 53, 0) 88%, #061f35 100%),
+      linear-gradient(90deg, transparent 0%, rgba(200, 164, 93, 0.14) 50%, transparent 100%);
+  }
+
+  .hiring-marquee {
+    @apply relative z-20 flex overflow-hidden py-3.5;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+
+  .hiring-marquee-group {
+    @apply flex min-w-max shrink-0 items-center;
+    animation: hiring-marquee 42s linear infinite;
+  }
+
+  .hiring-banner:hover .hiring-marquee-group {
+    animation-duration: 72s;
+  }
+
+  .hiring-marquee-item {
+    @apply inline-flex items-center gap-2 px-4 font-bold text-white/90 sm:px-6;
+    font-size: clamp(0.72rem, 1.4vw, 0.92rem);
+    letter-spacing: 0.08em;
+  }
+
+  .hiring-marquee-item::after {
+    content: "";
+    @apply ml-3 h-1.5 w-1.5 rounded-full bg-champagne shadow-[0_0_0_4px_rgba(200,164,93,0.12)] sm:ml-5;
+  }
+
+  .hiring-marquee-item.is-lead > span {
+    @apply rounded-full border border-champagne/55 bg-champagne/15 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.22em] text-champagne shadow-[inset_0_1px_0_rgba(255,255,255,0.14)];
+  }
+
+  .hiring-marquee-item.is-cta {
+    @apply text-champagne;
+  }
+
+  .hiring-marquee-item.is-cta > span {
+    @apply border-b border-champagne/60 pb-0.5 font-extrabold;
+  }
+
+  .hiring-marquee-cta-icon {
+    @apply shrink-0 transition duration-300;
+  }
+
+  .hiring-banner:hover .hiring-marquee-cta-icon {
+    transform: translateX(0.24rem);
   }
 
   .hero-shade {
@@ -354,6 +423,90 @@
     @apply mt-4 text-sm font-bold text-white/65;
   }
 
+  .jobs-header {
+    @apply border-b border-sand/70 bg-ivory/95 shadow-[0_10px_35px_rgba(8,43,73,0.08)] backdrop-blur-xl;
+  }
+
+  .jobs-hero {
+    @apply bg-ink py-14 text-white lg:py-20;
+  }
+
+  .jobs-hero-grid {
+    @apply grid gap-10 lg:grid-cols-[0.8fr_0.62fr] lg:items-center;
+  }
+
+  .jobs-advert-image {
+    @apply overflow-hidden rounded bg-white p-2 shadow-soft ring-1 ring-white/20;
+  }
+
+  .jobs-advert-image img {
+    @apply h-full w-full rounded object-cover;
+  }
+
+  .jobs-fact-grid {
+    @apply mt-8 grid gap-3 sm:grid-cols-3;
+  }
+
+  .jobs-fact {
+    @apply rounded border border-white/10 bg-white/[0.08] p-4 backdrop-blur;
+  }
+
+  .jobs-fact span {
+    @apply block text-[0.66rem] font-extrabold uppercase tracking-[0.18em] text-champagne;
+  }
+
+  .jobs-fact strong {
+    @apply mt-2 block text-sm font-extrabold text-white;
+  }
+
+  .job-grid {
+    @apply grid gap-5 lg:grid-cols-2;
+  }
+
+  .job-card {
+    @apply rounded bg-white p-5 shadow-card ring-1 ring-ink/5;
+  }
+
+  .job-card-header {
+    @apply flex flex-col gap-2 border-b border-sand pb-4 sm:flex-row sm:items-start sm:justify-between;
+  }
+
+  .job-card h2 {
+    @apply font-display text-3xl font-bold leading-tight text-ink;
+  }
+
+  .job-card .position-count {
+    @apply inline-flex w-fit rounded-full bg-wine/10 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-wine;
+  }
+
+  .job-list {
+    @apply mt-4 grid gap-2 text-sm leading-6 text-ink/70;
+  }
+
+  .job-list li {
+    @apply grid grid-cols-[auto_1fr] gap-2;
+  }
+
+  .job-list svg {
+    @apply mt-1 shrink-0 text-wine;
+  }
+
+  .application-panel {
+    @apply rounded bg-white p-5 shadow-soft ring-1 ring-sand/80 sm:p-7;
+  }
+
+  .application-note {
+    @apply rounded border border-champagne/50 bg-champagne/10 p-4 text-sm font-semibold leading-6 text-ink/75;
+  }
+
+  .file-input-shell {
+    @apply rounded border border-dashed border-sand bg-ivory p-4;
+  }
+
+  .file-input-shell input {
+    @apply mt-3 w-full text-sm font-semibold text-ink file:mr-4 file:rounded file:border-0 file:bg-ink file:px-4 file:py-2 file:text-sm file:font-extrabold file:text-white;
+  }
+
   .map-wrap {
     @apply relative overflow-hidden rounded bg-sand shadow-card ring-1 ring-ink/10;
   }
@@ -399,8 +552,13 @@
   }
 
   .field input,
+  .field select,
   .field textarea {
     @apply w-full rounded border border-sand bg-ivory px-4 py-3 text-sm font-semibold text-ink outline-none transition placeholder:text-ink/40 focus:border-champagne focus:bg-white focus:ring-4 focus:ring-champagne/20;
+  }
+
+  .field select {
+    @apply appearance-none;
   }
 
   .field textarea {
@@ -476,9 +634,37 @@
   }
 }
 
+@keyframes hiring-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @media (max-width: 640px) {
+  .hiring-banner-wrap {
+    padding-top: 4.45rem;
+  }
+
+  .hiring-marquee {
+    padding-bottom: 0.72rem;
+    padding-top: 0.72rem;
+  }
+
+  .hiring-marquee-item {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .hiring-marquee-item::after {
+    margin-left: 0.7rem;
+  }
+
   .hero-bg {
-    object-position: 43% center;
+    object-position: 36% center;
   }
 
   .hero-shade {
@@ -515,5 +701,10 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hiring-marquee-group {
+    animation: none !important;
+    transform: none;
   }
 }

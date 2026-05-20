@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -19,12 +19,13 @@ import {
   apartmentHighlights,
   business,
   careerAreas,
-  careersWhatsappLink,
   directionsLink,
   footerLinks,
   galleryItems,
+  hiringDetails,
   heroStats,
   images,
+  jobsPageLink,
   landmarks,
   mapEmbedUrl,
   pricing,
@@ -51,8 +52,15 @@ const navItems = [
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
   { label: "Reviews", href: "#reviews" },
-  { label: "Careers", href: "#careers" },
+  { label: "Careers", href: jobsPageLink },
   { label: "Contact", href: "#contact" },
+];
+
+const hiringMarqueeItems = [
+  { text: "WE'RE HIRING", variant: "lead" },
+  { text: "Join the Chipo's Lux Apartments Team" },
+  { text: "Now hiring hospitality & apartment service staff" },
+  { text: "View Open Positions", variant: "cta" },
 ];
 
 const floatingSocialItems = [
@@ -108,37 +116,10 @@ const initialForm: BookingForm = {
   message: "",
 };
 
-type NetworkInformationLike = {
-  downlink?: number;
-  effectiveType?: string;
-  saveData?: boolean;
-  addEventListener?: (type: "change", listener: () => void) => void;
-  removeEventListener?: (type: "change", listener: () => void) => void;
-};
-
-const getConnection = () =>
-  (navigator as Navigator & { connection?: NetworkInformationLike }).connection;
-
-const shouldUseHeroVideo = () => {
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) return false;
-
-  const connection = getConnection();
-  if (!connection) return true;
-  if (connection.saveData) return false;
-  if (connection.effectiveType === "slow-2g" || connection.effectiveType === "2g") return false;
-  if (typeof connection.downlink === "number" && connection.downlink > 0 && connection.downlink < 1.5) {
-    return false;
-  }
-
-  return true;
-};
-
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState<BookingForm>(initialForm);
   const [formError, setFormError] = useState("");
-  const [useHeroVideo, setUseHeroVideo] = useState(false);
 
   const mapReady = mapEmbedUrl.startsWith("https://");
   const mapSrc = mapReady ? mapEmbedUrl : "about:blank";
@@ -146,16 +127,6 @@ function App() {
   const careersEmailHref = `mailto:${business.careersEmail}?subject=${encodeURIComponent(
     "Career inquiry - Chipolux Apartment",
   )}`;
-
-  useEffect(() => {
-    const updateHeroMedia = () => setUseHeroVideo(shouldUseHeroVideo());
-    updateHeroMedia();
-
-    const connection = getConnection();
-    connection?.addEventListener?.("change", updateHeroMedia);
-
-    return () => connection?.removeEventListener?.("change", updateHeroMedia);
-  }, []);
 
   const handleFieldChange = (field: keyof BookingForm, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -266,27 +237,40 @@ function App() {
       </header>
 
       <main id="top">
+        <div className="hiring-banner-wrap">
+          <a
+            className="hiring-banner"
+            href={jobsPageLink}
+            aria-label={`${hiringDetails.bannerText}. Now hiring hospitality and apartment service staff. View open positions.`}
+          >
+            <div className="hiring-marquee" aria-hidden="true">
+              {[0, 1].map((cycle) => (
+                <div className="hiring-marquee-group" key={cycle}>
+                  {hiringMarqueeItems.map((item) => (
+                    <span
+                      className={`hiring-marquee-item ${
+                        item.variant ? `is-${item.variant}` : ""
+                      }`}
+                      key={`${cycle}-${item.text}`}
+                    >
+                      <span>{item.text}</span>
+                      {item.variant === "cta" ? (
+                        <ArrowRight className="hiring-marquee-cta-icon" aria-hidden="true" size={18} />
+                      ) : null}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </a>
+        </div>
+
         <section className="hero-section">
           <img
             src={images.heroFront}
-            alt="Front exterior of Chipolux Apartment in Choma"
+            alt="Secure property setting exterior at Chipo's Lux Apartments in Choma"
             className="hero-bg"
           />
-          {useHeroVideo ? (
-            <video
-              className="hero-bg hero-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={images.heroFront}
-              aria-hidden="true"
-              onError={() => setUseHeroVideo(false)}
-            >
-              <source src={images.videoTour} type="video/mp4" />
-            </video>
-          ) : null}
           <div className="hero-shade" />
 
           <div className="section-shell relative z-10 flex min-h-[calc(100svh-3rem)] flex-col justify-end pb-10 pt-32 lg:pb-14">
@@ -636,14 +620,13 @@ function App() {
                 <p className="eyebrow">Careers</p>
                 <h2 className="section-title mt-4">Work with Chipolux Apartment</h2>
                 <p className="copy mt-5">
-                  Interested in hospitality, guest support, or apartment care? Send your details and the kind of role
-                  you are looking for. Career opportunities may depend on availability, but every inquiry is kept clear
-                  and direct.
+                  Chipo's Lux Apartments is receiving applications for apartment operations, housekeeping, security,
+                  and reception roles. View the full advert, role details, deadline, and application form on the jobs page.
                 </p>
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                  <a className="btn-whatsapp justify-center" href={careersWhatsappLink} target="_blank" rel="noreferrer">
-                    <MessageCircle aria-hidden="true" size={18} />
-                    Send Career Inquiry
+                  <a className="btn-whatsapp justify-center" href={jobsPageLink}>
+                    <ArrowRight aria-hidden="true" size={18} />
+                    View Open Jobs
                   </a>
                   <a className="btn-secondary justify-center" href={careersEmailHref}>
                     <Mail aria-hidden="true" size={18} />
