@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
-import { onAuthChange, User } from "../firebase";
+import { onAuthChange, getEmployee } from "../firebase";
+import type { User } from "firebase/auth";
 import AuthPage from "./AuthPage";
 import DashboardLayout from "./DashboardLayout";
+import type { Employee } from "./types";
 
 export default function AdminApp() {
   const [user, setUser] = useState<User | null>(null);
+  const [employee, setEmployee] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthChange((u) => {
+    const unsub = onAuthChange(async (u) => {
       setUser(u);
+      if (u) {
+        const emp = await getEmployee(u.uid);
+        setEmployee(emp);
+      } else {
+        setEmployee(null);
+      }
       setLoading(false);
     });
     return unsub;
@@ -24,6 +33,6 @@ export default function AdminApp() {
     );
   }
 
-  if (!user) return <AuthPage />;
-  return <DashboardLayout />;
+  if (!user || !employee) return <AuthPage />;
+  return <DashboardLayout user={user} employee={employee} />;
 }

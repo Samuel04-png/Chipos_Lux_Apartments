@@ -18,7 +18,10 @@ export default function AuthPage() {
     try {
       await loginAdmin(email, password);
     } catch (err: any) {
-      setError(err.message || "Login failed. Check credentials.");
+      const msg = err?.code === "auth/user-not-found" || err?.code === "auth/wrong-password" || err?.code === "auth/invalid-credential"
+        ? "Invalid email or password."
+        : err?.message || "Login failed.";
+      setError(msg);
     } finally {
       setBusy(false);
     }
@@ -26,7 +29,6 @@ export default function AuthPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-bg" />
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-brand">
@@ -65,11 +67,7 @@ export default function AuthPage() {
             {error ? <p className="auth-error">{error}</p> : null}
 
             <button type="submit" className="auth-btn" disabled={busy}>
-              {busy ? (
-                <span className="auth-btn-loading" />
-              ) : (
-                "Sign In"
-              )}
+              {busy ? <span className="auth-btn-loading" /> : "Sign In"}
             </button>
           </form>
 

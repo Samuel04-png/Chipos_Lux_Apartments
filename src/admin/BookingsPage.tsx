@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { subscribeBookings, updateBookingStatus, deleteBooking, Booking } from "../firebase";
+import { AdminLayout, StatusBadge, SearchInput, EmptyState } from "./SharedComponents";
 
 export default function BookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filter, setFilter] = useState<Booking["status"] | "all">("all");
+  const [search, setSearch] = useState("");
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -11,29 +13,32 @@ export default function BookingsPage() {
     return unsub;
   }, []);
 
-  const filtered = filter === "all" ? bookings : bookings.filter((b) => b.status === filter);
+  const filtered = bookings.filter((b) => {
+    if (filter !== "all" && b.status !== filter) return false;
+    if (search) {
+      const q = search.toLowerCase();
+      return (
+        b.fullName.toLowerCase().includes(q) ||
+        b.phone.includes(q) ||
+        b.email.toLowerCase().includes(q)
+      );
+    }
+    return true;
+  });
 
   const handleStatus = async (id: string, status: Booking["status"]) => {
     setBusyId(id);
-    try {
-      await updateBookingStatus(id, status);
-    } catch (e) {
-      console.error("Status update failed", e);
-    } finally {
-      setBusyId(null);
-    }
+    try { await updateBookingStatus(id, status); }
+    catch (e) { console.error("Status update failed", e); }
+    finally { setBusyId(null); }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this booking inquiry permanently?")) return;
     setBusyId(id);
-    try {
-      await deleteBooking(id);
-    } catch (e) {
-      console.error("Delete failed", e);
-    } finally {
-      setBusyId(null);
-    }
+    try { await deleteBooking(id); }
+    catch (e) { console.error("Delete failed", e); }
+    finally { setBusyId(null); }
   };
 
   const statusFilters: { label: string; value: Booking["status"] | "all" }[] = [
@@ -45,7 +50,10 @@ export default function BookingsPage() {
   ];
 
   return (
-    <div>
+    <AdminLayout
+      title="Bookings"
+      subtitle={`${bookings.length} total · ${bookings.filter(b => b.status === "new").length} new`}
+    >
       <div className="filter-bar">
         {statusFilters.map((f) => (
           <button
@@ -54,23 +62,22 @@ export default function BookingsPage() {
             onClick={() => setFilter(f.value)}
           >
             {f.label}
-            {f.value !== "all" ? (
-              <span className="filter-count">
-                {bookings.filter((b) => b.status === f.value).length}
-              </span>
-            ) : null}
+            {f.value !== "all" && (
+              <span className="filter-count">{bookings.filter((b) => b.status === f.value).length}</span>
+            )}
           </button>
         ))}
       </div>
 
       {filtered.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-icon">◇</div>
-          <p>No bookings found.</p>
-          <span className="empty-sub">Bookings will appear here when guests submit the inquiry form.</span>
-        </div>
+        <EmptyState
+          icon="◇"
+          title="No bookings found"
+          subtitle={search ? "Try a different search term." : "Bookings will appear here when guests submit the inquiry form."}
+        />
       ) : (
         <div className="table-shell">
+          <SearchInput value={search} onChange={setSearch} placeholder="Search by name, phone, or email..." />
           <table className="data-table">
             <thead>
               <tr>
@@ -86,7 +93,7 @@ export default function BookingsPage() {
             </thead>
             <tbody>
               {filtered.map((b) => (
-                <tr key={b.id} className={`table-row-${b.status}`}>
+                <tr key={b.id}>
                   <td className="td-name">{b.fullName}</td>
                   <td>
                     <div className="td-contact">
@@ -94,41 +101,30 @@ export default function BookingsPage() {
                       {b.email ? <a href={`mailto:${b.email}`}>{b.email}</a> : null}
                     </div>
                   </td>
-                  <td className="td-dates">
-                    {b.checkIn || "—"} → {b.checkOut || "—"}
-                  </td>
+                  <td className="td-dates">{b.checkIn || "—"} → {b.checkOut || "—"}</td>
                   <td>{b.guests || "—"}</td>
-                  <td className="td-msg">
-                    {b.message ? (
-                      <span title={b.message}>
-                        {b.message.length > 40 ? b.message.slice(0, 40) + "…" : b.message}
-                      </span>
-                    ) : "—"}
-                  </td>
+                  <td className="td-msg">{b.message || "—"}</td>
                   <td className="td-date">
-                    {b.createdAt ? new Date(b.createdAt.toMillis()).toLocaleDateString() : "—"}
+                    {b.createdAt?.toMillis ? new Date(b.createdAt.toMillis()).toLocaleDateString() : "—"}
                   </td>
-                  <td>
-                    <span className={`dash-status status-${b.status}`}>{b.status}</span>
-                  </td>
+                  <td><StatusBadge status={b.status} /></td>
                   <td className="td-actions">
                     <div className="action-group">
-                      {b.status === "new" ? (
+                      {b.status === "new" && (
                         <button className="action-btn action-contact" onClick={() => handleStatus(b.id, "contacted")} disabled={busyId === b.id}>
                           Contact
                         </button>
-                      ) : null}
-                      {b.status === "contacted" ? (
+                      )}
+                      {b.status === "contacted" && (
                         <button className="action-btn action-book" onClick={() => handleStatus(b.id, "booked")} disabled={busyId === b.id}>
                           Book
                         </button>
-                      ) : null}
-                      {b.status !== "closed" && b.status !== "booked" ? null : null}
-                      {b.status === "booked" ? (
+                      )}
+                      {(b.status === "booked" && (
                         <button className="action-btn action-close" onClick={() => handleStatus(b.id, "closed")} disabled={busyId === b.id}>
                           Close
                         </button>
-                      ) : null}
+                      ))}
                       <button className="action-btn action-del" onClick={() => handleDelete(b.id)} disabled={busyId === b.id}>
                         ✕
                       </button>
@@ -140,6 +136,6 @@ export default function BookingsPage() {
           </table>
         </div>
       )}
-    </div>
+    </AdminLayout>
   );
 }

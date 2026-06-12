@@ -1,12 +1,35 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, deleteDoc, updateDoc, getDocs, Timestamp } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  where,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  updateDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import type { User } from "firebase/auth";
+import type { Employee, Role } from "./admin/types";
 
 export type { User };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYO2B7dhin6RFSnOD1TyeeycxiZpzsc4Y",
+  apiKey: "AIzaSy...sc4Y",
   authDomain: "tailored-manor.firebaseapp.com",
   projectId: "tailored-manor",
   storageBucket: "tailored-manor.firebasestorage.app",
@@ -19,7 +42,8 @@ const app = initializeApp(firebaseConfig, "chippolux");
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-// --- Auth ---
+// ─── Auth ──────────────────────────────────────────────────────────────
+
 export const loginAdmin = (email: string, password: string) =>
   signInWithEmailAndPassword(auth, email, password);
 
@@ -28,7 +52,8 @@ export const logoutAdmin = () => signOut(auth);
 export const onAuthChange = (cb: (user: User | null) => void) =>
   onAuthStateChanged(auth, cb);
 
-// --- Bookings ---
+// ─── Bookings ──────────────────────────────────────────────────────────
+
 export interface Booking {
   id: string;
   fullName: string;
@@ -76,11 +101,16 @@ export const updateBookingStatus = async (id: string, status: Booking["status"])
   await updateDoc(doc(bookingsRef, id), { status });
 };
 
+export const updateBooking = async (id: string, data: Partial<Booking>) => {
+  await updateDoc(doc(bookingsRef, id), data);
+};
+
 export const deleteBooking = async (id: string) => {
   await deleteDoc(doc(bookingsRef, id));
 };
 
-// --- Careers / Job Applications ---
+// ─── Job Applications ──────────────────────────────────────────────────
+
 export interface JobApplication {
   id: string;
   fullName: string;
@@ -115,4 +145,90 @@ export const subscribeApplications = (cb: (apps: JobApplication[]) => void, onEr
 
 export const updateApplicationStatus = async (id: string, status: JobApplication["status"]) => {
   await updateDoc(doc(applicationsRef, id), { status });
+};
+
+export const deleteApplication = async (id: string) => {
+  await deleteDoc(doc(applicationsRef, id));
+};
+
+// ─── Employees / Role Management ───────────────────────────────────────
+
+const employeesRef = collection(db, "chippolux_employees");
+
+// Fetch a single employee by Firebase auth UID
+export const getEmployee = async (uid: string): Promise<Employee | null> => {
+  try {
+    const snap = await getDoc(doc(employeesRef, uid));
+    if (!snap.exists()) return null;
+    return { id: snap.id, ...snap.data() } as Employee;
+  } catch {
+    return null;
+  }
+};
+
+// Subscribe to all employees (for super admin)
+export const subscribeEmployees = (cb: (employees: Employee[]) => void, onError?: (err: Error) => void) => {
+  const q = query(employeesRef, orderBy("createdAt", "desc"));
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const list: Employee[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      })) as Employee[];
+      cb(list);
+    },
+    (err) => {
+      console.error("subscribeEmployees error:", err);
+      cb([]);
+      onError?.(err);
+    },
+  );
+};
+
+// Create a new employee (Firebase Auth account + Firestore doc)
+export const createEmployee = async (data: {
+  email: string;
+  password: string;
+  displayName: string;
+  phone: string;
+  role: Role;
+}) => {
+  // Create Firebase Auth account
+  const cred = await createUserWithEmailAndPassword(auth, data.email, data.password);
+  const uid = cred.user.uid;
+
+  // Store role & profile in Firestore
+  await setDoc(doc(employeesRef, uid), {
+    email: data.email,
+    password: data.password, // stored for admin reference; in production use Firebase Auth only
+    displayName: data.displayName,
+    phone: data.phone,
+    role: data.role,
+    isActive: true,
+    createdAt: Date.now(),
+    lastLogin: null,
+  });
+
+  // Log the auth user out so the admin session stays as the current admin
+  await signOut(auth);
+  // Re-sign in as the original admin — caller must re-auth or manage state
+  return uid;
+};
+
+// Update an employee's role or profile
+export const updateEmployee = async (uid: string, data: Partial<Employee>) => {
+  await updateDoc(doc(employeesRef, uid), data);
+};
+
+// Toggle employee active/inactive
+export const toggleEmployeeActive = async (uid: string, isActive: boolean) => {
+  await updateDoc(doc(employeesRef, uid), { isActive });
+};
+
+// Delete an employee
+export const deleteEmployee = async (uid: string) => {
+  await deleteDoc(doc(employeesRef, uid));
+  // Note: Firebase Auth account deletion requires Admin SDK on backend
+  // For now this removes the Firestore record only
 };

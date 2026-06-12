@@ -1,28 +1,78 @@
 import { useState } from "react";
+import type { User } from "firebase/auth";
 import { logoutAdmin } from "../firebase";
+import type { Employee, Role, Permission } from "./types";
+import { ROLE_LABELS, ROLE_COLORS, ROLE_PERMISSIONS } from "./types";
 import DashboardHome from "./DashboardHome";
 import BookingsPage from "./BookingsPage";
 import ApplicationsPage from "./ApplicationsPage";
+import EmployeesPage from "./EmployeesPage";
 
-type Page = "dashboard" | "bookings" | "applications";
+// ─── Role Helper ──────────────────────────────────────────────────────
 
-const navItems: { id: Page; label: string; icon: string }[] = [
-  { id: "dashboard", label: "Dashboard", icon: "◈" },
-  { id: "bookings", label: "Bookings", icon: "◇" },
-  { id: "applications", label: "Applications", icon: "○" },
+function hasPermission(role: Role, permission: Permission): boolean {
+  return ROLE_PERMISSIONS[role]?.includes(permission) ?? false;
+}
+
+// ─── Nav Items ────────────────────────────────────────────────────────
+
+interface NavItem {
+  id: Page;
+  label: string;
+  icon: string;
+  permission?: Permission;
+  section: string;
+}
+
+const navItems: NavItem[] = [
+  { id: "dashboard", label: "Dashboard", icon: "◈", permission: "dashboard.view", section: "Main" },
+  { id: "bookings", label: "Bookings", icon: "◇", permission: "bookings.view", section: "Operations" },
+  { id: "applications", label: "Applications", icon: "○", permission: "applications.view", section: "Operations" },
+  { id: "employees", label: "Employees", icon: "✦", permission: "employees.view", section: "Admin" },
 ];
 
-export default function DashboardLayout() {
+type Page = "dashboard" | "bookings" | "applications" | "employees";
+
+// ─── Props ────────────────────────────────────────────────────────────
+
+interface Props {
+  user: User;
+  employee: Employee;
+}
+
+export default function DashboardLayout({ user, employee }: Props) {
   const [page, setPage] = useState<Page>("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const role = employee.role;
+  const userName = employee.displayName || user.email?.split("@")[0] || "Admin";
+  const userInitial = userName.charAt(0).toUpperCase();
+  const roleColor = ROLE_COLORS[role];
+  const filteredNav = navItems.filter(
+    (item) => !item.permission || hasPermission(role, item.permission)
+  );
+
   const renderPage = () => {
     switch (page) {
-      case "bookings": return <BookingsPage />;
-      case "applications": return <ApplicationsPage />;
-      default: return <DashboardHome onNavigate={setPage} />;
+      case "bookings":
+        return <BookingsPage />;
+      case "applications":
+        return <ApplicationsPage />;
+      case "employees":
+        return <EmployeesPage />;
+      default:
+        return <DashboardHome
+          onNavigate={(p: Page) => setPage(p)}
+          role={role}
+          hasPermission={(perm: Permission) => hasPermission(role, perm)}
+        />;
     }
   };
+
+  const pageTitle = page === "dashboard" ? "Dashboard"
+    : page === "bookings" ? "Bookings"
+    : page === "applications" ? "Job Applications"
+    : "Employees";
 
   return (
     <div className="admin-shell">
@@ -36,17 +86,34 @@ export default function DashboardLayout() {
           </div>
         </div>
 
+        <div className="sidebar-user">
+          <div className="sidebar-user-avatar">{userInitial}</div>
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-name">{userName}</div>
+            <span className="sidebar-user-role-badge" style={{ background: `${roleColor}22`, color: roleColor }}>
+              {ROLE_LABELS[role]}
+            </span>
+          </div>
+        </div>
+
         <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              className={`sidebar-link ${page === item.id ? "is-active" : ""}`}
-              onClick={() => { setPage(item.id); setSidebarOpen(false); }}
-            >
-              <span className="sidebar-icon">{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
+          {filteredNav.map((item, idx, arr) => {
+            const showSectionLabel = idx === 0 || item.section !== arr[idx - 1].section;
+            return (
+              <div key={item.id}>
+                {showSectionLabel && (
+                  <div className="sidebar-section-label">{item.section}</div>
+                )}
+                <button
+                  className={`sidebar-link ${page === item.id ? "is-active" : ""}`}
+                  onClick={() => { setPage(item.id); setSidebarOpen(false); }}
+                >
+                  <span className="sidebar-icon">{item.icon}</span>
+                  {item.label}
+                </button>
+              </div>
+            );
+          })}
         </nav>
 
         <div className="sidebar-footer">
@@ -56,10 +123,10 @@ export default function DashboardLayout() {
         </div>
       </aside>
 
-      {/* Overlay for mobile */}
-      {sidebarOpen ? (
+      {/* Overlay (mobile) */}
+      {sidebarOpen && (
         <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
-      ) : null}
+      )}
 
       {/* Main */}
       <div className="admin-main">
@@ -67,10 +134,12 @@ export default function DashboardLayout() {
           <button className="topbar-hamburger" onClick={() => setSidebarOpen(true)}>
             <span /><span /><span />
           </button>
-          <h2 className="topbar-title">
-            {page === "dashboard" ? "Dashboard" : page === "bookings" ? "Bookings" : "Job Applications"}
-          </h2>
+          <h2 className="topbar-title">{pageTitle}</h2>
           <div className="topbar-spacer" />
+          <div className="topbar-meta">
+            <span className="topbar-meta-dot" />
+            {ROLE_LABELS[role]}
+          </div>
         </header>
 
         <div className="admin-content">
