@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { addBooking } from "./firebase";
 import {
   ArrowRight,
   CheckCircle2,
@@ -140,6 +141,17 @@ function App() {
       setFormError("Please add your name and phone number so Chipo's Lux Apartments can respond.");
       return;
     }
+
+    // Save to Firestore
+    addBooking({
+      fullName: form.fullName.trim(),
+      phone: form.phone.trim(),
+      email: form.email.trim(),
+      checkIn: form.checkIn,
+      checkOut: form.checkOut,
+      guests: form.guests,
+      message: form.message.trim(),
+    }).catch(console.error);
 
     const details = [
       whatsappMessage,
@@ -803,6 +815,8 @@ function App() {
         </div>
         <div className="section-shell mt-8 border-t border-white/10 pt-5 text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
           &copy; 2025 Chipolux Apartment. All rights reserved.
+          <span className="ml-4 opacity-30">·</span>
+          <a href="/admin/" className="ml-4 opacity-30 hover:opacity-100 transition-opacity">Admin</a>
         </div>
       </footer>
 

@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: "index.html",
         jobs: "jobs/index.html",
+        admin: "admin/index.html",
       },
     },
   },

@@ -17,6 +17,8 @@ import {
   jobOpenings,
   whatsappLink,
 } from "./content";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase";
 
 type ApplicationForm = {
   fullName: string;
@@ -52,6 +54,17 @@ function JobsPage() {
       setFormError("Please add your name, phone, email, and the position you are applying for.");
       return;
     }
+
+    // Save to Firestore
+    addDoc(collection(db, "chippolux_applications"), {
+      fullName: form.fullName.trim(),
+      phone: form.phone.trim(),
+      email: form.email.trim(),
+      position: form.position.trim(),
+      message: form.message.trim(),
+      status: "new",
+      createdAt: serverTimestamp(),
+    }).catch(console.error);
 
     const subject = `Job application - ${form.position.trim()} - ${form.fullName.trim()}`;
     const body = [
