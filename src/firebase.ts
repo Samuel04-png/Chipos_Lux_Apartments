@@ -53,15 +53,23 @@ export const addBooking = async (data: Omit<Booking, "id" | "createdAt" | "statu
   return docRef.id;
 };
 
-export const subscribeBookings = (cb: (bookings: Booking[]) => void) => {
+export const subscribeBookings = (cb: (bookings: Booking[]) => void, onError?: (err: Error) => void) => {
   const q = query(bookingsRef, orderBy("createdAt", "desc"));
-  return onSnapshot(q, (snapshot) => {
-    const list: Booking[] = snapshot.docs.map((d) => ({
-      id: d.id,
-      ...d.data(),
-    })) as Booking[];
-    cb(list);
-  });
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const list: Booking[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      })) as Booking[];
+      cb(list);
+    },
+    (err) => {
+      console.error("subscribeBookings error:", err);
+      cb([]);
+      onError?.(err);
+    },
+  );
 };
 
 export const updateBookingStatus = async (id: string, status: Booking["status"]) => {
@@ -86,15 +94,23 @@ export interface JobApplication {
 
 const applicationsRef = collection(db, "chippolux_applications");
 
-export const subscribeApplications = (cb: (apps: JobApplication[]) => void) => {
+export const subscribeApplications = (cb: (apps: JobApplication[]) => void, onError?: (err: Error) => void) => {
   const q = query(applicationsRef, orderBy("createdAt", "desc"));
-  return onSnapshot(q, (snapshot) => {
-    const list: JobApplication[] = snapshot.docs.map((d) => ({
-      id: d.id,
-      ...d.data(),
-    })) as JobApplication[];
-    cb(list);
-  });
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const list: JobApplication[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      })) as JobApplication[];
+      cb(list);
+    },
+    (err) => {
+      console.error("subscribeApplications error:", err);
+      cb([]);
+      onError?.(err);
+    },
+  );
 };
 
 export const updateApplicationStatus = async (id: string, status: JobApplication["status"]) => {
