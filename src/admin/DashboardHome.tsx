@@ -43,28 +43,28 @@ export default function DashboardHome({ onNavigate, hasPermission }: Props) {
       {/* Stats Grid */}
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-icon stat-icon-gold">◇</div>
+          <div className="stat-icon stat-icon-gold">BK</div>
           <div>
             <p className="stat-value">{bookings.length}</p>
             <p className="stat-label">Total Bookings</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon stat-icon-wine">◈</div>
+          <div className="stat-icon stat-icon-wine">NW</div>
           <div>
             <p className="stat-value">{newBookings}</p>
             <p className="stat-label">New Inquiries</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon stat-icon-leaf">●</div>
+          <div className="stat-icon stat-icon-leaf">CT</div>
           <div>
             <p className="stat-value">{contactedBookings}</p>
             <p className="stat-label">In Contact</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon stat-icon-ink">○</div>
+          <div className="stat-icon stat-icon-ink">HR</div>
           <div>
             <p className="stat-value">{applications.length}</p>
             <p className="stat-label">Job Applications</p>
@@ -109,18 +109,18 @@ export default function DashboardHome({ onNavigate, hasPermission }: Props) {
           <div className="quick-actions">
             {hasPermission("bookings.view") && (
               <button className="quick-btn" onClick={() => onNavigate("bookings")}>
-                <span className="quick-icon">◇</span>
+                <span className="quick-icon">BK</span>
                 <span>Manage Bookings</span>
               </button>
             )}
             {hasPermission("applications.view") && (
               <button className="quick-btn" onClick={() => onNavigate("applications")}>
-                <span className="quick-icon">○</span>
+                <span className="quick-icon">HR</span>
                 <span>Review Applications</span>
               </button>
             )}
             <a className="quick-btn" href="/" target="_blank" rel="noreferrer">
-              <span className="quick-icon">◈</span>
+              <span className="quick-icon">WEB</span>
               <span>View Live Site</span>
             </a>
             <a
@@ -129,7 +129,7 @@ export default function DashboardHome({ onNavigate, hasPermission }: Props) {
               target="_blank"
               rel="noreferrer"
             >
-              <span className="quick-icon">✦</span>
+              <span className="quick-icon">DB</span>
               <span>Firebase Console</span>
             </a>
           </div>

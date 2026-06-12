@@ -1,4 +1,6 @@
 import { useState } from "react";
+import type { LucideIcon } from "lucide-react";
+import { BriefcaseBusiness, CalendarCheck, LayoutDashboard, LogOut, Menu, UsersRound } from "lucide-react";
 import type { User } from "firebase/auth";
 import { logoutAdmin } from "../firebase";
 import type { Employee, Role, Permission } from "./types";
@@ -19,16 +21,16 @@ function hasPermission(role: Role, permission: Permission): boolean {
 interface NavItem {
   id: Page;
   label: string;
-  icon: string;
+  icon: LucideIcon;
   permission?: Permission;
   section: string;
 }
 
 const navItems: NavItem[] = [
-  { id: "dashboard", label: "Dashboard", icon: "◈", permission: "dashboard.view", section: "Main" },
-  { id: "bookings", label: "Bookings", icon: "◇", permission: "bookings.view", section: "Operations" },
-  { id: "applications", label: "Applications", icon: "○", permission: "applications.view", section: "Operations" },
-  { id: "employees", label: "Employees", icon: "✦", permission: "employees.view", section: "Admin" },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, permission: "dashboard.view", section: "Main" },
+  { id: "bookings", label: "Bookings", icon: CalendarCheck, permission: "bookings.view", section: "Operations" },
+  { id: "applications", label: "Applications", icon: BriefcaseBusiness, permission: "applications.view", section: "Operations" },
+  { id: "employees", label: "Employees", icon: UsersRound, permission: "employees.view", section: "Admin" },
 ];
 
 type Page = "dashboard" | "bookings" | "applications" | "employees";
@@ -99,6 +101,7 @@ export default function DashboardLayout({ user, employee }: Props) {
         <nav className="sidebar-nav">
           {filteredNav.map((item, idx, arr) => {
             const showSectionLabel = idx === 0 || item.section !== arr[idx - 1].section;
+            const Icon = item.icon;
             return (
               <div key={item.id}>
                 {showSectionLabel && (
@@ -108,8 +111,8 @@ export default function DashboardLayout({ user, employee }: Props) {
                   className={`sidebar-link ${page === item.id ? "is-active" : ""}`}
                   onClick={() => { setPage(item.id); setSidebarOpen(false); }}
                 >
-                  <span className="sidebar-icon">{item.icon}</span>
-                  {item.label}
+                  <Icon className="sidebar-icon" aria-hidden="true" size={18} strokeWidth={2} />
+                  <span>{item.label}</span>
                 </button>
               </div>
             );
@@ -118,7 +121,8 @@ export default function DashboardLayout({ user, employee }: Props) {
 
         <div className="sidebar-footer">
           <button className="sidebar-logout" onClick={logoutAdmin}>
-            ✕ Sign Out
+            <LogOut aria-hidden="true" size={16} />
+            <span>Sign Out</span>
           </button>
         </div>
       </aside>
@@ -131,8 +135,8 @@ export default function DashboardLayout({ user, employee }: Props) {
       {/* Main */}
       <div className="admin-main">
         <header className="admin-topbar">
-          <button className="topbar-hamburger" onClick={() => setSidebarOpen(true)}>
-            <span /><span /><span />
+          <button className="topbar-hamburger" onClick={() => setSidebarOpen(true)} aria-label="Open admin navigation">
+            <Menu aria-hidden="true" size={22} />
           </button>
           <h2 className="topbar-title">{pageTitle}</h2>
           <div className="topbar-spacer" />
