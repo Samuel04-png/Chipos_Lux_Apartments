@@ -120,7 +120,7 @@ export default function EmployeesPage() {
     setDeleteTarget(null);
   };
 
-  const roleOptions: Role[] = ["super_admin", "admin", "booking_manager", "staff", "housekeeping"];
+  const roleOptions: Role[] = ["super_admin", "admin", "booking_manager", "receptionist", "staff", "housekeeping"];
 
   return (
     <AdminLayout
@@ -221,6 +221,7 @@ export default function EmployeesPage() {
           {form.role === "super_admin" && "Full access to all admin features, settings, and employee management."}
           {form.role === "admin" && "Can manage bookings and applications. Can view employee list."}
           {form.role === "booking_manager" && "Can view dashboard and manage bookings."}
+          {form.role === "receptionist" && "Can view dashboard, manage booking inquiries, and view job applications. No administrator settings or employee management access."}
           {form.role === "staff" && "Read-only access to dashboard, bookings, and applications."}
           {form.role === "housekeeping" && "Read-only dashboard access."}
         </div>

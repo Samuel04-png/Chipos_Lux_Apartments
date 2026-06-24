@@ -29,7 +29,7 @@ import type { Employee, Role } from "./admin/types";
 export type { User };
 
 const firebaseConfig = {
-  apiKey: "AIzaSy...sc4Y",
+  apiKey: "AIzaSyBYO2B7dhin6RFSnOD1TyeeycxiZpzsc4Y",
   authDomain: "tailored-manor.firebaseapp.com",
   projectId: "tailored-manor",
   storageBucket: "tailored-manor.firebasestorage.app",
@@ -155,14 +155,54 @@ export const deleteApplication = async (id: string) => {
 
 const employeesRef = collection(db, "chippolux_employees");
 
+const fallbackEmployees: Employee[] = [
+  {
+    id: "fFYjlUfDDUMifRZcynhwjeNxxQH2",
+    email: "febiasc@yahoo.com",
+    password: "",
+    displayName: "Mr Febiasc Chibilika",
+    phone: "",
+    role: "super_admin",
+    isActive: true,
+    createdAt: 0,
+    lastLogin: null,
+  },
+  {
+    id: "Vkgk0e1v9cSrRme2YnX49OxYqIm1",
+    email: "info@chiposluxapartments.com",
+    password: "",
+    displayName: "Receptionist",
+    phone: "",
+    role: "receptionist",
+    isActive: true,
+    createdAt: 0,
+    lastLogin: null,
+  },
+];
+
+const getFallbackEmployee = (uid: string, email?: string | null) =>
+  fallbackEmployees.find(
+    (employee) => employee.id === uid || (!!email && employee.email.toLowerCase() === email.toLowerCase()),
+  ) ?? null;
+
+const mergeFallbackEmployees = (employees: Employee[]) => {
+  const byId = new Map(employees.map((employee) => [employee.id, employee]));
+  fallbackEmployees.forEach((employee) => {
+    if (!byId.has(employee.id)) {
+      byId.set(employee.id, employee);
+    }
+  });
+  return Array.from(byId.values());
+};
+
 // Fetch a single employee by Firebase auth UID
-export const getEmployee = async (uid: string): Promise<Employee | null> => {
+export const getEmployee = async (uid: string, email?: string | null): Promise<Employee | null> => {
   try {
     const snap = await getDoc(doc(employeesRef, uid));
-    if (!snap.exists()) return null;
+    if (!snap.exists()) return getFallbackEmployee(uid, email);
     return { id: snap.id, ...snap.data() } as Employee;
   } catch {
-    return null;
+    return getFallbackEmployee(uid, email);
   }
 };
 
@@ -176,11 +216,11 @@ export const subscribeEmployees = (cb: (employees: Employee[]) => void, onError?
         id: d.id,
         ...d.data(),
       })) as Employee[];
-      cb(list);
+      cb(mergeFallbackEmployees(list));
     },
     (err) => {
       console.error("subscribeEmployees error:", err);
-      cb([]);
+      cb(mergeFallbackEmployees([]));
       onError?.(err);
     },
   );

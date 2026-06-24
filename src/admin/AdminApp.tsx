@@ -14,7 +14,7 @@ export default function AdminApp() {
     const unsub = onAuthChange(async (u) => {
       setUser(u);
       if (u) {
-        const emp = await getEmployee(u.uid);
+        const emp = await getEmployee(u.uid, u.email);
         setEmployee(emp);
       } else {
         setEmployee(null);

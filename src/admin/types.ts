@@ -1,6 +1,6 @@
 // ─── Roles & Permissions ────────────────────────────────────────────────
 
-export type Role = "super_admin" | "admin" | "booking_manager" | "staff" | "housekeeping";
+export type Role = "super_admin" | "admin" | "booking_manager" | "receptionist" | "staff" | "housekeeping";
 
 export type Permission =
   | "dashboard.view"
@@ -20,6 +20,7 @@ export const ROLE_LABELS: Record<Role, string> = {
   super_admin: "Super Admin",
   admin: "Admin",
   booking_manager: "Booking Manager",
+  receptionist: "Receptionist",
   staff: "Staff",
   housekeeping: "Housekeeping",
 };
@@ -28,6 +29,7 @@ export const ROLE_COLORS: Record<Role, string> = {
   super_admin: "#c084fc",
   admin: "#60a5fa",
   booking_manager: "#fbbf24",
+  receptionist: "#34d399",
   staff: "#34d399",
   housekeeping: "#f472b6",
 };
@@ -48,6 +50,11 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "settings.view",
   ],
   booking_manager: [
+    "dashboard.view",
+    "bookings.view", "bookings.edit",
+    "applications.view",
+  ],
+  receptionist: [
     "dashboard.view",
     "bookings.view", "bookings.edit",
     "applications.view",
