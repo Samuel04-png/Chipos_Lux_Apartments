@@ -87,6 +87,45 @@ function JobsPage() {
     )}&body=${encodeURIComponent(body.join("\n"))}`;
   };
 
+  const jobsContentCleared = jobOpenings.length === 0;
+
+  if (jobsContentCleared) {
+    return (
+      <div className="min-h-screen bg-ivory text-ink">
+        <header className="jobs-header">
+          <div className="section-shell flex items-center justify-between gap-3 py-3">
+            <a href={homePageLink} className="flex min-w-0 items-center gap-3" aria-label="Back to Chipo's Lux Apartments home">
+              <span className="brand-mark">
+                <img src={images.logo} alt="Chipo's Lux Apartments" className="w-14 object-contain sm:w-16" />
+              </span>
+              <span className="min-w-0 leading-tight">
+                <span className="block truncate font-display text-[1.2rem] font-bold text-ink sm:text-[1.4rem]">
+                  Chipo's Lux
+                </span>
+                <span className="block text-[0.62rem] font-extrabold uppercase tracking-[0.22em] text-wine sm:text-[0.68rem]">
+                  Careers
+                </span>
+              </span>
+            </a>
+            <a className="btn-secondary hidden sm:inline-flex" href={homePageLink}>
+              <ArrowLeft aria-hidden="true" size={18} />
+              Back to Website
+            </a>
+          </div>
+        </header>
+        <main className="section-shell flex min-h-[70vh] flex-col justify-center py-20">
+          <p className="eyebrow">Content cleared</p>
+          <h1 className="mt-4 max-w-3xl font-display text-5xl font-bold leading-tight text-ink sm:text-6xl">
+            Jobs data has been removed.
+          </h1>
+          <p className="copy-large mt-6 max-w-2xl">
+            The previous job listings, application details, and careers content have been cleared from the website.
+          </p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-ivory text-ink">
       <header className="jobs-header">
