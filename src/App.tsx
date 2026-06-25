@@ -172,62 +172,6 @@ function App() {
     window.open(inquiryUrl, "_blank", "noopener,noreferrer");
   };
 
-  const publicContentCleared =
-    heroStats.length === 0 &&
-    apartmentHighlights.length === 0 &&
-    galleryItems.length === 0 &&
-    amenities.length === 0 &&
-    pricing.length === 0 &&
-    testimonials.length === 0 &&
-    careerAreas.length === 0 &&
-    trustPoints.length === 0;
-
-  if (publicContentCleared) {
-    return (
-      <div className="min-h-screen bg-ivory text-ink">
-        <header className="border-b border-sand/70 bg-ivory">
-          <div className="section-shell flex items-center justify-between gap-3 py-4">
-            <a href="#top" className="flex min-w-0 items-center gap-3" aria-label="Chipo's Lux Apartments home">
-              <span className="brand-mark">
-                <img src={images.logo} alt="Chipo's Lux Apartments" className="w-14 object-contain sm:w-16" />
-              </span>
-              <span className="min-w-0 leading-tight">
-                <span className="block truncate font-display text-[1.2rem] font-bold text-ink sm:text-[1.4rem]">
-                  Chipo's Lux
-                </span>
-                <span className="block text-[0.62rem] font-extrabold uppercase tracking-[0.22em] text-wine sm:text-[0.68rem]">
-                  Apartments
-                </span>
-              </span>
-            </a>
-            <a className="btn-whatsapp" href={whatsappLink} target="_blank" rel="noreferrer">
-              <MessageCircle aria-hidden="true" size={18} />
-              WhatsApp
-            </a>
-          </div>
-        </header>
-        <main id="top" className="section-shell flex min-h-[70vh] flex-col justify-center py-20">
-          <p className="eyebrow">Content cleared</p>
-          <h1 className="mt-4 max-w-3xl font-display text-5xl font-bold leading-tight text-ink sm:text-6xl">
-            Public website data has been removed.
-          </h1>
-          <p className="copy-large mt-6 max-w-2xl">
-            The previous marketing, gallery, pricing, reviews, amenities, and jobs content has been cleared from the website.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a className="btn-whatsapp justify-center" href={whatsappLink} target="_blank" rel="noreferrer">
-              <MessageCircle aria-hidden="true" size={18} />
-              Contact on WhatsApp
-            </a>
-            <a className="btn-secondary justify-center" href="/admin/">
-              Admin Panel
-            </a>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-ivory text-ink">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/50 bg-ivory/95 shadow-[0_10px_35px_rgba(8,43,73,0.08)] backdrop-blur-xl">
