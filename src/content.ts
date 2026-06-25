@@ -212,23 +212,11 @@ export const landmarks = [
   "150 metres from the New Apostolic Church",
 ];
 
-export const testimonials = [
-  {
-    name: "Guest Review",
-    rating: 5,
-    text: "Very clean and comfortable apartments. The location is convenient and the staff were very helpful.",
-  },
-  {
-    name: "Guest Review",
-    rating: 5,
-    text: "Perfect place for a short stay in Choma. Secure parking, good Wi-Fi, and a peaceful environment.",
-  },
-  {
-    name: "Guest Review",
-    rating: 5,
-    text: "The apartment was modern, well furnished, and exactly what we needed for our stay.",
-  },
-];
+export const testimonials: Array<{
+  name: string;
+  rating: number;
+  text: string;
+}> = [];
 
 export const careerAreas = [
   {
@@ -330,7 +318,6 @@ export const footerLinks = [
   { label: "Amenities", href: "#amenities" },
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
-  { label: "Reviews", href: "#reviews" },
   { label: "Careers", href: jobsPageLink },
   { label: "Contact", href: "#contact" },
 ];

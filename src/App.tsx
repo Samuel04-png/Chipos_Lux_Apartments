@@ -52,7 +52,7 @@ const navItems = [
   { label: "Amenities", href: "#amenities" },
   { label: "Gallery", href: "#gallery" },
   { label: "Location", href: "#location" },
-  { label: "Reviews", href: "#reviews" },
+  ...(testimonials.length > 0 ? [{ label: "Reviews", href: "#reviews" }] : []),
   { label: "Careers", href: jobsPageLink },
   { label: "Contact", href: "#contact" },
 ];
@@ -542,33 +542,35 @@ function App() {
           </div>
         </section>
 
-        <section id="reviews" className="scroll-mt-24 py-20 lg:py-28">
-          <div className="section-shell">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">Guest reviews</p>
-                <h2 className="section-title mt-4">What guests can expect</h2>
+        {testimonials.length > 0 ? (
+          <section id="reviews" className="scroll-mt-24 py-20 lg:py-28">
+            <div className="section-shell">
+              <div className="section-heading">
+                <div>
+                  <p className="eyebrow">Guest reviews</p>
+                  <h2 className="section-title mt-4">What guests can expect</h2>
+                </div>
+                <p className="copy max-w-2xl">
+                  A simple guest feedback layout that can be updated with verified reviews when they are ready.
+                </p>
               </div>
-              <p className="copy max-w-2xl">
-                A simple guest feedback layout that can be updated with verified reviews when they are ready.
-              </p>
-            </div>
 
-            <div className="review-grid mt-10">
-              {testimonials.map((review) => (
-                <article key={review.text} className="review-card">
-                  <div className="flex gap-1 text-champagne" aria-label={`${review.rating} star rating`}>
-                    {Array.from({ length: review.rating }).map((_, index) => (
-                      <Star key={index} size={18} fill="currentColor" aria-hidden="true" />
-                    ))}
-                  </div>
-                  <p className="mt-5">{review.text}</p>
-                  <strong>{review.name}</strong>
-                </article>
-              ))}
+              <div className="review-grid mt-10">
+                {testimonials.map((review) => (
+                  <article key={review.text} className="review-card">
+                    <div className="flex gap-1 text-champagne" aria-label={`${review.rating} star rating`}>
+                      {Array.from({ length: review.rating }).map((_, index) => (
+                        <Star key={index} size={18} fill="currentColor" aria-hidden="true" />
+                      ))}
+                    </div>
+                    <p className="mt-5">{review.text}</p>
+                    <strong>{review.name}</strong>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         <section id="location" className="scroll-mt-24 bg-cream py-20 lg:py-28">
           <div className="section-shell grid gap-10 lg:grid-cols-[0.92fr_0.68fr] lg:items-center">
