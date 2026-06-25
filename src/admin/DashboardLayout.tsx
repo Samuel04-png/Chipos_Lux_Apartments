@@ -65,7 +65,6 @@ export default function DashboardLayout({ user, employee }: Props) {
       default:
         return <DashboardHome
           onNavigate={(p: Page) => setPage(p)}
-          role={role}
           hasPermission={(perm: Permission) => hasPermission(role, perm)}
         />;
     }
